@@ -17,8 +17,6 @@ public class Minesweeper {
         // TODO code application logic here
         Menu menu = new Menu();
         menu.setVisible(true);
-        
-        System.out.println("Hello");
     }
     
 }
