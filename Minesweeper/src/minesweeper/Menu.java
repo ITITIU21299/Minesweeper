@@ -4,6 +4,10 @@
  */
 package minesweeper;
 
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author nguye
@@ -15,6 +19,13 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        URL resourceURL = this.getClass().getResource("/iconFrame.png");
+        if (resourceURL != null) {
+            Image icon = new ImageIcon(resourceURL).getImage();
+            this.setIconImage(icon);
+        } else {
+            System.err.println("Resource not found: img/iconFrame.png");
+           }
     }
 
     /**
