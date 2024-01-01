@@ -21,6 +21,7 @@ import javax.swing.JPanel;
  *
  * @author nguye
  */
+
 public class GameScreen{
     public class MineTile extends JButton {
             int rows;
@@ -32,7 +33,7 @@ public class GameScreen{
             }
         }
 
-        int tileSize = 70;
+        int tileSize = 40;
         int numRows = 8;
         int numCols = 8;
         int boardWidth = numCols * tileSize;
@@ -96,9 +97,11 @@ public class GameScreen{
                                 }
                             } else if (e.getButton() == MouseEvent.BUTTON3) {
                                 if (tile.getText() == "" && tile.isEnabled()) {
-                                    tile.setText("🚩");
+                                    tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/11.png")));
+                                    //tile.setText("🚩");
                                 } else if (tile.getText() == "🚩") {
-                                    tile.setText("");
+                                    tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/11.png")));
+                                    //tile.setText("");
                                 }
                             }
                         }
