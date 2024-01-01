@@ -37,31 +37,151 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        startBtn = new javax.swing.JLabel();
+        settingsBtn = new javax.swing.JLabel();
+        extiBtn = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Minesweeper");
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1217, 684));
+        setMinimumSize(new java.awt.Dimension(1217, 684));
+        setPreferredSize(new java.awt.Dimension(1217, 684));
+        setSize(new java.awt.Dimension(1217, 684));
+        getContentPane().setLayout(null);
+
+        startBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Idle.png"))); // NOI18N
+        startBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                startBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                startBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                startBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                startBtnMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                startBtnMouseReleased(evt);
+            }
+        });
+        getContentPane().add(startBtn);
+        startBtn.setBounds(488, 290, 240, 82);
+
+        settingsBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Idle.png"))); // NOI18N
+        settingsBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settingsBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settingsBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                settingsBtnMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                settingsBtnMouseReleased(evt);
+            }
+        });
+        getContentPane().add(settingsBtn);
+        settingsBtn.setBounds(488, 400, 240, 82);
+
+        extiBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        extiBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Idle.png"))); // NOI18N
+        extiBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                extiBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                extiBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                extiBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                extiBtnMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                extiBtnMouseReleased(evt);
+            }
+        });
+        getContentPane().add(extiBtn);
+        extiBtn.setBounds(488, 510, 240, 82);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1217, 646);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void startBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseClicked
+        // Start the game
+    }//GEN-LAST:event_startBtnMouseClicked
+
+    private void startBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseEntered
+         startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Hover.png"))); // NOI18N
+    }//GEN-LAST:event_startBtnMouseEntered
+
+    private void startBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseExited
+         startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Idle.png"))); // NOI18N        
+    }//GEN-LAST:event_startBtnMouseExited
+
+    private void startBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMousePressed
+         startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Press.png"))); // NOI18N                
+    }//GEN-LAST:event_startBtnMousePressed
+
+    private void startBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseReleased
+         startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Hover.png"))); // NOI18N                        
+    }//GEN-LAST:event_startBtnMouseReleased
+
+    private void extiBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_extiBtnMouseClicked
+        dispose();
+    }//GEN-LAST:event_extiBtnMouseClicked
+
+    private void extiBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_extiBtnMouseEntered
+        extiBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Hover.png"))); // NOI18N
+    }//GEN-LAST:event_extiBtnMouseEntered
+
+    private void extiBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_extiBtnMouseExited
+        extiBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Idle.png"))); // NOI18N
+    }//GEN-LAST:event_extiBtnMouseExited
+
+    private void extiBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_extiBtnMousePressed
+        extiBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Press.png"))); // NOI18N
+    }//GEN-LAST:event_extiBtnMousePressed
+
+    private void extiBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_extiBtnMouseReleased
+        extiBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Hover.png"))); // NOI18N
+    }//GEN-LAST:event_extiBtnMouseReleased
+
+    private void settingsBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseClicked
+        // Go to settings
+    }//GEN-LAST:event_settingsBtnMouseClicked
+
+    private void settingsBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseEntered
+        settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Hover.png")));         
+    }//GEN-LAST:event_settingsBtnMouseEntered
+
+    private void settingsBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseExited
+        settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Idle.png")));         
+    }//GEN-LAST:event_settingsBtnMouseExited
+
+    private void settingsBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMousePressed
+        settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Press.png")));         
+    }//GEN-LAST:event_settingsBtnMousePressed
+
+    private void settingsBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseReleased
+        settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Hover.png")));         
+    }//GEN-LAST:event_settingsBtnMouseReleased
 
     /**
      * @param args the command line arguments
@@ -99,6 +219,9 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel extiBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel settingsBtn;
+    private javax.swing.JLabel startBtn;
     // End of variables declaration//GEN-END:variables
 }
