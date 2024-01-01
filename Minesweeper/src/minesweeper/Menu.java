@@ -301,6 +301,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void easyBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMousePressed
         easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Press.png")));         
+        GameScreen gameScreen = new GameScreen();
     }//GEN-LAST:event_easyBtnMousePressed
 
     private void easyBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMouseReleased
