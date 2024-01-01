@@ -10,6 +10,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.GlyphVector;
 import javax.swing.*;
 import java.util.Random;
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public class Minesweeper {
 
     int tilesClicked = 0;
     boolean gameOver = false;
+    
+    int numberOfFlags = 0;
+    JLabel mineLabel = new JLabel();
 
     public Minesweeper() {
         frame.setSize(boardWidth, boardHeight);
@@ -67,7 +71,12 @@ public class Minesweeper {
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
         frame.add(textPanel, BorderLayout.NORTH);
-
+        
+        mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        mineLabel.setHorizontalAlignment(JLabel.CENTER);
+        frame.add(mineLabel, BorderLayout.SOUTH);
+        
         boardPanel.setLayout(new GridLayout(numRows, numCols));
         frame.add(boardPanel);
 
@@ -98,8 +107,10 @@ public class Minesweeper {
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
                             if (tile.getText() == "" && tile.isEnabled()) {
                                 tile.setText("🚩");
+                                flagPlaced();
                             } else if (tile.getText() == "🚩") {
                                 tile.setText("");
+                                flagRemove();
                             }
                         }
                     }
@@ -188,6 +199,16 @@ public class Minesweeper {
             return 1;
         }
         return 0;
+    }
+    
+    public void flagPlaced() {
+        numberOfFlags++;
+        mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+    }
+
+    public void flagRemoved() {
+        numberOfFlags--;
+        mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
     }
     
     public static void main(String[] args) {
