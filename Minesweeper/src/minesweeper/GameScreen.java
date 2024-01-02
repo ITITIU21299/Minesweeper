@@ -176,6 +176,7 @@ public class GameScreen {
             return;
         }
         tile.setEnabled(false);
+        tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
         tilesClicked++;
 
         int minesFound = 0;
