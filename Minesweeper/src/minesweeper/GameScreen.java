@@ -66,7 +66,8 @@ public class GameScreen extends JPanel {
     private Timer timer;
     private int secondsPassed;
     private int timeLimit;
-
+    private JButton pauseResumeButton;
+    private boolean gamePaused = false;
     public GameScreen() {
         System.out.println("1");
         this.setSize(boardWidth, boardHeight);
@@ -86,6 +87,7 @@ public class GameScreen extends JPanel {
         this.add(textPanel, BorderLayout.NORTH);
 
 
+
         mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -93,6 +95,22 @@ public class GameScreen extends JPanel {
 
         boardPanel.setLayout(new GridLayout(numRows, numCols));
         this.add(boardPanel);
+
+
+        pauseResumeButton = new JButton("Pause");
+        pauseResumeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                togglePauseResume();
+            }
+        });
+
+        // Add the Pause/Resume button to the GUI
+        textPanel.add(pauseResumeButton, BorderLayout.EAST);
+
+
+
+
 
         for (int rows = 0; rows < numRows; rows++) {
             for (int cols = 0; cols < numCols; cols++) {
@@ -145,6 +163,7 @@ public class GameScreen extends JPanel {
         timer.start();
 
     }
+
     private void initializeTimer() {
         secondsPassed = 0;
         switch (difficulty) {
@@ -168,17 +187,28 @@ public class GameScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 secondsPassed++;
                 updateTimerLabel();
-                if(secondsPassed>timeLimit){
+                if (!gamePaused) {
+                    if(secondsPassed>timeLimit){
 
                     revealMine();
                 }
-            }
+            }}
         });
     }    private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
         textLabel.setText("Time Limit: " + timeLimit + "   |   Time: " + secondsPassed + " seconds");
     }
 
+    private void togglePauseResume() {
+        gamePaused = !gamePaused;
+        if (gamePaused) {
+            timer.stop();
+            pauseResumeButton.setText("Resume");
+        } else {
+            timer.start();
+            pauseResumeButton.setText("Pause");
+        }
+    }
 
 
 
