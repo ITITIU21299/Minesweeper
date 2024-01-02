@@ -881,7 +881,7 @@ public class Menu extends javax.swing.JFrame {
         gameScreen = new GameScreen(diff, row, col);
         cl = (CardLayout) (parent.getLayout());
         
-        parent.setLocation((int) ((1217 - 40*row) /2) , 10);
+        parent.setLocation((int) ((1217 - 40*row) /2) , 2);
         parent.setSize(40*col, 40*row + 40);
         parent.removeAll();
         parent.add(gameScreen);
