@@ -4,12 +4,7 @@
  */
 package minesweeper;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,8 +12,11 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import javax.swing.*;
+import java.text.SimpleDateFormat;
+
 
 /**
  *
@@ -47,8 +45,8 @@ public class GameScreen extends JPanel {
     }
 
     int tileSize = 40;
-    int numRows = 15;
-    int numCols = 15;
+    static int numRows = 15;
+    static int numCols = 15;
     int boardWidth = numCols * tileSize;
     int boardHeight = numRows * tileSize;
 
@@ -58,12 +56,12 @@ public class GameScreen extends JPanel {
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
 
-    int numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-    MineTile[][] board = new MineTile[numRows][numCols];
+    static int numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+    static MineTile[][] board = new MineTile[numRows][numCols];
     ArrayList<MineTile> mineList;
     Random random = new Random();
 
-    int numberOfFlags = 0;
+    static int numberOfFlags = 0;
     JLabel mineLabel = new JLabel();
 
 
@@ -72,16 +70,21 @@ public class GameScreen extends JPanel {
 
     private int difficulty;
     private Timer timer;
-    private int secondsPassed;
+    private static int secondsPassed;
     private int timeLimit;
     private JButton pauseResumeButton;
-    private boolean gamePaused = false;
+    public static boolean gamePaused = false;
     private JButton advancedHintButton;
+
+    private int playerScore;
+    private static final int SCORE_FACTOR_PER_MINE = 100;
+    private int elapsedTimeSeconds;
+
 
 
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
-        System.out.println("1");
+
         difficulty = diff;
         setDifficulty();
         numRows = row;
@@ -128,11 +131,22 @@ public class GameScreen extends JPanel {
                 provideAdvancedHint();
             }
         });
-        textPanel.add(advancedHintButton, BorderLayout.WEST);
+
 
         // Add the Pause/Resume button to the GUI
-        textPanel.add(pauseResumeButton, BorderLayout.EAST);
+
         saveButton = new JButton("Save Game");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveGame();
+            }
+        });
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.add(advancedHintButton);
+
+
+
 
         // ... (Existing code)
         for (int rows = 0; rows < numRows; rows++) {
@@ -216,7 +230,11 @@ public class GameScreen extends JPanel {
         minesFound += countMine(r + 1, c);
         minesFound += countMine(r + 1, c + 1);
 
-        advancedHint = minesFound;
+        if ((r == 0 && (c == 0 || c == numCols - 1)) || (r == numRows - 1 && (c == 0 || c == numCols - 1))) {
+            advancedHint = minesFound / 2; // For corners, consider half the mines
+        } else {
+            advancedHint = minesFound;
+        }
 
         return advancedHint;
     }
@@ -253,9 +271,12 @@ public class GameScreen extends JPanel {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                secondsPassed++;
-                updateTimerLabel();
+
                 if (!gamePaused) {
+                    secondsPassed++;
+                    elapsedTimeSeconds++;
+
+                    updateTimerLabel();
                     if(secondsPassed>timeLimit){
 
                     revealMine();
@@ -394,7 +415,17 @@ public class GameScreen extends JPanel {
 
     public void flagPlaced() {
         numberOfFlags++;
-        mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        //mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        playerScore += calculateScoreForMineFound();
+        mineLabel.setText("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        updateScoreLabel();
+
+    }
+    private int calculateScoreForMineFound() {
+        return SCORE_FACTOR_PER_MINE;
+    }
+    private void updateScoreLabel() {
+        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds | Score: " + playerScore);
     }
 
     public void flagRemoved() {
@@ -404,6 +435,7 @@ public class GameScreen extends JPanel {
 
     private static class GameState implements Serializable {
         private static final long serialVersionUID = 1L;
+        private Date saveDate;
 
         // Add necessary fields to represent the game state
         private int numRows;
@@ -424,19 +456,21 @@ public class GameScreen extends JPanel {
             this.board = board;  // Store the state of each MineTile
             // ... (Initialize other fields as needed)
         }
+        public Date getSaveDate() {
+            return saveDate;
+        }
+
+        public void setSaveDate(Date saveDate) {
+            this.saveDate = saveDate;
+        }
     }
-
-
-
-
-
-
-    private void saveGame() {
+    public static void saveGame() {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("minesweeper.sav"))) {
             GameState gameState = new GameState(numRows, numCols, numberOfMines, numberOfFlags, secondsPassed, board);
             // ... (Add more fields to gameState as needed)
             outputStream.writeObject(gameState);
-            System.out.println("Game saved successfully.");
+            gameState.setSaveDate(new Date());
+JOptionPane.showMessageDialog(null,"Save game successfully");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -514,6 +548,10 @@ public class GameScreen extends JPanel {
         // Initialize the timer with the loaded time limit
         initializeTimer();
     }
+
+
+
+
 
 
 

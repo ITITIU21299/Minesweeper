@@ -1029,6 +1029,8 @@ public class Menu extends javax.swing.JFrame {
         parent.repaint();
         parent.revalidate();
         cl.show(parent, "pausePanel");
+        GameScreen.gamePaused=true;
+
     }//GEN-LAST:event_pauseBtnMouseClicked
 
     private void pauseBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBtnMouseEntered
@@ -1098,6 +1100,7 @@ public class Menu extends javax.swing.JFrame {
         parent.repaint();
         parent.revalidate();
         cl.show(parent, "gameScreen");
+        GameScreen.gamePaused=false;
     }//GEN-LAST:event_confirmBtnPauseMouseClicked
 
     private void confirmBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnPauseMouseEntered
@@ -1145,8 +1148,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnPauseMouseReleased
 
     private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
-        JOptionPane.showMessageDialog(null, "Saved", "Notification",JOptionPane.INFORMATION_MESSAGE);            
-        // Save here
+        JOptionPane.showMessageDialog(null, "Saved", "Notification",JOptionPane.INFORMATION_MESSAGE);
+        GameScreen.saveGame();
     }//GEN-LAST:event_saveBtnMouseClicked
 
     private void saveBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseEntered
