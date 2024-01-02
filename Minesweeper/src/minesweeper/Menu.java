@@ -140,12 +140,12 @@ public class Menu extends javax.swing.JFrame {
         txtDiffExplain.setBounds(0, 240, 466, 40);
 
         rowLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        rowLabel2.setText("7 < rows <= 15");
+        rowLabel2.setText("7 < rows < 16");
         diffPanel.add(rowLabel2);
         rowLabel2.setBounds(290, 80, 160, 40);
 
         columnLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        columnLabel2.setText("7 < columns <= 15");
+        columnLabel2.setText("7 < columns < 16");
         diffPanel.add(columnLabel2);
         columnLabel2.setBounds(290, 130, 160, 40);
 
@@ -865,7 +865,7 @@ public class Menu extends javax.swing.JFrame {
         try {
             row = Integer.valueOf(r);
             col = Integer.valueOf(c);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException e ) {
             JOptionPane.showMessageDialog(null, "Please enter valid rows and columns", "Warning",JOptionPane.WARNING_MESSAGE);            
             return;
         }
@@ -873,11 +873,16 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a difficulty", "Warning",JOptionPane.WARNING_MESSAGE);   
             return;
         } 
+        if (row < 8 || row > 15 || col < 8 || col > 15) {
+            JOptionPane.showMessageDialog(null, "Please enter valid rows and columns", "Warning",JOptionPane.WARNING_MESSAGE);     
+            return;
+        }
+            
         gameScreen = new GameScreen(diff, row, col);
         cl = (CardLayout) (parent.getLayout());
         
-        parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
-        parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);
+        parent.setLocation((int) ((1217 - 40*row) /2) , 10);
+        parent.setSize(40*col, 40*row + 40);
         parent.removeAll();
         parent.add(gameScreen);
         parent.repaint();
@@ -995,13 +1000,17 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_offBtnSettingsMouseReleased
 
     private void menuBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBtnMouseClicked
+        gameScreen.stopTimer();
+
         parent.setLocation(375, 240);
         parent.setSize(466, 366);
         parent.removeAll();
         parent.add(menuPanel);
         parent.repaint();
         parent.revalidate();
-        cl.show(parent, "menuPanel");        
+        cl.show(parent, "menuPanel");      
+        
+        
     }//GEN-LAST:event_menuBtnMouseClicked
 
     private void menuBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBtnMouseEntered
@@ -1022,6 +1031,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuBtnMouseReleased
 
     private void pauseBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBtnMouseClicked
+        gameScreen.stopTimer();        
+        
         parent.setLocation(375, 240);
         parent.setSize(466, 366);
         parent.removeAll();
@@ -1092,6 +1103,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void confirmBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnPauseMouseClicked
         // Save settings
+        gameScreen.startTimer();        
         
         parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
         parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);
@@ -1120,7 +1132,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtnPauseMouseReleased
 
     private void backBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnPauseMouseClicked
-        // Discard settings
+        // Discard settings        
+        gameScreen.startTimer();        
         
         parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
         parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);

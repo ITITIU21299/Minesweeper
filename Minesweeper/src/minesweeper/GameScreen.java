@@ -52,9 +52,9 @@ public class GameScreen extends JPanel {
 
 
     //  this = new  this("Minesweeper");
-    JLabel textLabel = new JLabel();
-    JPanel textPanel = new JPanel();
-    JPanel boardPanel = new JPanel();
+    JLabel textLabel;
+    JPanel textPanel;
+    JPanel boardPanel;
 
     static int numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
     static MineTile[][] board = new MineTile[numRows][numCols];
@@ -67,6 +67,7 @@ public class GameScreen extends JPanel {
 
     int tilesClicked = 0;
     boolean gameOver = false;
+    boolean gameNotBegin = true;
 
     private int difficulty;
     private Timer timer;
@@ -94,21 +95,24 @@ public class GameScreen extends JPanel {
         // this.setLocationRelativeTo(null);
         // this.setResizable(false);
         // this.setDefaultCloseOperation(  this.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout(0,0));
+        
+        textLabel = new JLabel();
+        textPanel = new JPanel();
+        boardPanel = new JPanel();
 
-        textLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        textLabel.setFont(new Font("Arial", Font.BOLD, 22));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
-        textLabel.setText("Number of mines: " + Integer.toString(numberOfMines));
+        textLabel.setText("Click a tile to start");
         textLabel.setOpaque(true);
 
         textPanel.setLayout(new BorderLayout());
-        textPanel.add(textLabel);
+        textPanel.add(textLabel, BorderLayout.WEST);
         this.add(textPanel, BorderLayout.NORTH);
 
 
-
-        mineLabel = new JLabel("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
-        mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        mineLabel.setFont(new Font("Arial", Font.BOLD, 18));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(mineLabel, BorderLayout.SOUTH);
 
@@ -142,8 +146,7 @@ public class GameScreen extends JPanel {
                 saveGame();
             }
         });
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-        textPanel.add(advancedHintButton);
+        //textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 
 
 
@@ -160,7 +163,13 @@ public class GameScreen extends JPanel {
                 tile.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
+                        if (gameNotBegin) {
+                            gameNotBegin = false;
+                            textPanel.add(advancedHintButton, BorderLayout.EAST);
+                            startTimer();
+                        }                        
                         if (gameOver) {
+                            stopTimer();
                             return;
                         }
                         MineTile tile = (MineTile) e.getSource();
@@ -193,9 +202,9 @@ public class GameScreen extends JPanel {
             }
         }
         this.setVisible(true);
+        
         initializeTimer();
         generateMines();
-        timer.start();
 
     }
 
@@ -273,8 +282,8 @@ public class GameScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
 
                 if (!gamePaused) {
-                    secondsPassed++;
-                    elapsedTimeSeconds++;
+                    secondsPassed+=1;
+                    elapsedTimeSeconds+=1;
 
                     updateTimerLabel();
                     if(secondsPassed>timeLimit){
@@ -284,9 +293,18 @@ public class GameScreen extends JPanel {
             }}
         });
     }
+    
+    public void stopTimer() {
+        timer.stop();
+    }
+    
+    public void startTimer() {
+        timer.start();
+    }
+    
     private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
-        textLabel.setText("Time Limit: " + timeLimit + "   |   Time: " + secondsPassed + " seconds");
+        textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " sceonds");
     }
 
     private void togglePauseResume() {
@@ -323,6 +341,7 @@ public class GameScreen extends JPanel {
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
         }
         gameOver = true;
+        stopTimer();
         textLabel.setText("Game Over!");
     }
 
