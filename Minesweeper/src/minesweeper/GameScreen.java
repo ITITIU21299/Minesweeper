@@ -24,7 +24,7 @@ import javax.swing.*;
  * @author nguye
  */
 
-public class GameScreen {
+public class GameScreen extends JPanel {
 
     public class MineTile extends JButton {
 
@@ -45,7 +45,7 @@ public class GameScreen {
     int boardHeight = numRows * tileSize;
 
 
-    JFrame frame = new JFrame("Minesweeper");
+    //  this = new  this("Minesweeper");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
@@ -69,12 +69,12 @@ public class GameScreen {
 
     public GameScreen() {
         System.out.println("1");
-        frame.setSize(boardWidth, boardHeight);
-        frame.setLocation((int) (1217 - boardWidth) / 2, 10);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        this.setSize(boardWidth, boardHeight);
+        this.setLocation((int) (1217 - boardWidth) / 2, 10);
+        // this.setLocationRelativeTo(null);
+        // this.setResizable(false);
+        // this.setDefaultCloseOperation(  this.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
 
         textLabel.setFont(new Font("Arial", Font.BOLD, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -83,16 +83,16 @@ public class GameScreen {
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        frame.add(textPanel, BorderLayout.NORTH);
+        this.add(textPanel, BorderLayout.NORTH);
 
 
         mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
-        frame.add(mineLabel, BorderLayout.SOUTH);
+        this.add(mineLabel, BorderLayout.SOUTH);
 
         boardPanel.setLayout(new GridLayout(numRows, numCols));
-        frame.add(boardPanel);
+        this.add(boardPanel);
 
         for (int rows = 0; rows < numRows; rows++) {
             for (int cols = 0; cols < numCols; cols++) {
@@ -139,7 +139,7 @@ public class GameScreen {
 
             }
         }
-        frame.setVisible(true);
+        this.setVisible(true);
         initializeTimer();
         generateMines();
         timer.start();

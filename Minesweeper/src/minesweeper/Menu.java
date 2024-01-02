@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
+ // NEW
 package minesweeper;
 
+import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -29,6 +32,7 @@ public class Menu extends javax.swing.JFrame {
      */
     int diff = 4;
     String txtDiff;
+    CardLayout cl;
     
     public Menu() {
         initComponents();
@@ -43,6 +47,12 @@ public class Menu extends javax.swing.JFrame {
         txtDiff = "Explain difficulty";
         java.awt.event.MouseEvent evt;
         
+        cl = (CardLayout) (parent.getLayout());
+        parent.removeAll();
+        parent.add(menuPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "menuPanel"); 
     }
 
     /**
@@ -54,6 +64,7 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        parent = new javax.swing.JPanel();
         diffPanel = new javax.swing.JPanel();
         txtRow = new javax.swing.JTextField();
         txtColumn = new javax.swing.JTextField();
@@ -68,17 +79,20 @@ public class Menu extends javax.swing.JFrame {
         hardBtn = new javax.swing.JLabel();
         confirmBtnDiff = new javax.swing.JLabel();
         backBtnDiff = new javax.swing.JLabel();
-        bgLabel = new javax.swing.JLabel();
+        bgDiff = new javax.swing.JLabel();
         settingsPanel = new javax.swing.JPanel();
         titleSettings = new javax.swing.JLabel();
         onBtn = new javax.swing.JLabel();
         offBtn = new javax.swing.JLabel();
         confirmBtnSettings = new javax.swing.JLabel();
         backBtnSettings = new javax.swing.JLabel();
-        bgLabel1 = new javax.swing.JLabel();
+        bgSettings = new javax.swing.JLabel();
+        menuPanel = new javax.swing.JPanel();
         startBtn = new javax.swing.JLabel();
         settingsBtn = new javax.swing.JLabel();
         exitBtn = new javax.swing.JLabel();
+        bgMenu = new javax.swing.JLabel();
+        backBtnGame = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -89,6 +103,8 @@ public class Menu extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(1217, 684));
         getContentPane().setLayout(null);
+
+        parent.setLayout(new java.awt.CardLayout());
 
         diffPanel.setLayout(null);
 
@@ -245,19 +261,16 @@ public class Menu extends javax.swing.JFrame {
         diffPanel.add(backBtnDiff);
         backBtnDiff.setBounds(67, 295, 133, 46);
 
-        bgLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        bgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
-        bgLabel.setFont(new Font("Open Sans", Font.BOLD, 28));
-        bgLabel.setToolTipText("");
-        bgLabel.setAlignmentY(0.0F);
-        bgLabel.setRequestFocusEnabled(false);
-        diffPanel.add(bgLabel);
-        bgLabel.setBounds(0, 0, 466, 366);
+        bgDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bgDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
+        bgDiff.setFont(new Font("Open Sans", Font.BOLD, 28));
+        bgDiff.setToolTipText("");
+        bgDiff.setAlignmentY(0.0F);
+        bgDiff.setRequestFocusEnabled(false);
+        diffPanel.add(bgDiff);
+        bgDiff.setBounds(0, 0, 466, 366);
 
-        diffPanel.setVisible(false);
-
-        getContentPane().add(diffPanel);
-        diffPanel.setBounds(375, 250, 466, 366);
+        parent.add(diffPanel, "card3");
         diffPanel.getAccessibleContext().setAccessibleDescription("");
 
         settingsPanel.setLayout(null);
@@ -358,18 +371,17 @@ public class Menu extends javax.swing.JFrame {
         settingsPanel.add(backBtnSettings);
         backBtnSettings.setBounds(67, 295, 133, 46);
 
-        bgLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        bgLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
-        bgLabel1.setToolTipText("");
-        bgLabel1.setAlignmentY(0.0F);
-        bgLabel1.setRequestFocusEnabled(false);
-        settingsPanel.add(bgLabel1);
-        bgLabel1.setBounds(0, 0, 466, 366);
+        bgSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bgSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
+        bgSettings.setToolTipText("");
+        bgSettings.setAlignmentY(0.0F);
+        bgSettings.setRequestFocusEnabled(false);
+        settingsPanel.add(bgSettings);
+        bgSettings.setBounds(0, 0, 466, 366);
 
-        settingsPanel.setVisible(false);
+        parent.add(settingsPanel, "card3");
 
-        getContentPane().add(settingsPanel);
-        settingsPanel.setBounds(375, 250, 466, 366);
+        menuPanel.setLayout(null);
 
         startBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Idle.png"))); // NOI18N
@@ -390,8 +402,8 @@ public class Menu extends javax.swing.JFrame {
                 startBtnMouseReleased(evt);
             }
         });
-        getContentPane().add(startBtn);
-        startBtn.setBounds(490, 290, 236, 82);
+        menuPanel.add(startBtn);
+        startBtn.setBounds(115, 30, 236, 82);
 
         settingsBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Idle.png"))); // NOI18N
@@ -412,8 +424,8 @@ public class Menu extends javax.swing.JFrame {
                 settingsBtnMouseReleased(evt);
             }
         });
-        getContentPane().add(settingsBtn);
-        settingsBtn.setBounds(490, 400, 236, 82);
+        menuPanel.add(settingsBtn);
+        settingsBtn.setBounds(115, 142, 236, 82);
 
         exitBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Idle.png"))); // NOI18N
@@ -434,8 +446,44 @@ public class Menu extends javax.swing.JFrame {
                 exitBtnMouseReleased(evt);
             }
         });
-        getContentPane().add(exitBtn);
-        exitBtn.setBounds(490, 510, 236, 82);
+        menuPanel.add(exitBtn);
+        exitBtn.setBounds(115, 254, 236, 82);
+
+        bgMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bgMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
+        bgMenu.setToolTipText("");
+        bgMenu.setAlignmentY(0.0F);
+        bgMenu.setRequestFocusEnabled(false);
+        menuPanel.add(bgMenu);
+        bgMenu.setBounds(0, 0, 466, 366);
+
+        parent.add(menuPanel, "card4");
+
+        getContentPane().add(parent);
+        parent.setBounds(375, 240, 466, 366);
+
+        backBtnGame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backBtnGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png"))); // NOI18N
+        backBtnGame.setVisible(false);
+        backBtnGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backBtnGameMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backBtnGameMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backBtnGameMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backBtnGameMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backBtnGameMouseReleased(evt);
+            }
+        });
+        getContentPane().add(backBtnGame);
+        backBtnGame.setBounds(60, 550, 133, 46);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -445,11 +493,12 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseClicked
-        startBtn.setVisible(false);
-        settingsBtn.setVisible(false);
-        exitBtn.setVisible(false);      
-           
-        diffPanel.setVisible(true);          
+        parent.removeAll();
+        parent.setVisible(true);
+        parent.add(diffPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "diffPanel");        
     }//GEN-LAST:event_startBtnMouseClicked
 
     private void startBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseEntered
@@ -489,7 +538,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnMouseReleased
 
     private void settingsBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseClicked
-        settingsPanel.setVisible(true);
+        parent.removeAll();
+        parent.setVisible(true);
+        parent.add(settingsPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "settingsPanel");    
     }//GEN-LAST:event_settingsBtnMouseClicked
 
     private void settingsBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseEntered
@@ -604,11 +658,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_hardBtnMousePressed
 
     private void backBtnDiffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMouseClicked
-        startBtn.setVisible(true);
-        settingsBtn.setVisible(true);
-        exitBtn.setVisible(true);      
-        
-        diffPanel.setVisible(false);
+        parent.removeAll();
+        parent.setVisible(true);
+        parent.add(menuPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "menuPanel");    
     }//GEN-LAST:event_backBtnDiffMouseClicked
 
     private void backBtnDiffMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMouseEntered
@@ -645,15 +700,21 @@ public class Menu extends javax.swing.JFrame {
             return;
         } 
         GameScreen gameScreen = new GameScreen();
-        dispose();
-        //diffPanel.setVisible(false);
-        //gameScreen.setVisible(true);
-        //this.add(gameScreen);     
-        //this.setComponentZOrder(gameScreen, 0);
-        //this.pack();
-        //GameScreenPanel.add(gameScreen);
-        //gameScreen.repaint();
-        //gameScreen.revalidate();
+        cl = (CardLayout) (parent.getLayout());
+        
+        row = 15;
+        col = 15;
+        
+        parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
+        parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);
+        parent.removeAll();
+        parent.add(gameScreen);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "gameScreen");   
+        
+        backBtnGame.setVisible(true);
+
     }//GEN-LAST:event_confirmBtnDiffMouseClicked
 
     private void confirmBtnDiffMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMouseEntered
@@ -698,13 +759,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtnSettingsMouseReleased
 
     private void backBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseClicked
-          
-        
-        startBtn.setVisible(true);
-        settingsBtn.setVisible(true);
-        exitBtn.setVisible(true);      
-        
-        settingsPanel.setVisible(false);
+        parent.removeAll();
+        parent.add(menuPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "menuPanel"); 
     }//GEN-LAST:event_backBtnSettingsMouseClicked
 
     private void backBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseEntered
@@ -763,6 +822,32 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_offBtnMouseReleased
 
+    private void backBtnGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnGameMouseClicked
+        parent.setLocation(375, 240);
+        parent.setSize(466, 366);
+        parent.removeAll();
+        parent.add(menuPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "menuPanel");
+    }//GEN-LAST:event_backBtnGameMouseClicked
+
+    private void backBtnGameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnGameMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backBtnGameMouseEntered
+
+    private void backBtnGameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnGameMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backBtnGameMouseExited
+
+    private void backBtnGameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnGameMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backBtnGameMousePressed
+
+    private void backBtnGameMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnGameMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backBtnGameMouseReleased
+
 
     /**
      * @param args the command line arguments
@@ -801,9 +886,11 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backBtnDiff;
+    private javax.swing.JLabel backBtnGame;
     private javax.swing.JLabel backBtnSettings;
-    private javax.swing.JLabel bgLabel;
-    private javax.swing.JLabel bgLabel1;
+    private javax.swing.JLabel bgDiff;
+    private javax.swing.JLabel bgMenu;
+    private javax.swing.JLabel bgSettings;
     private javax.swing.JLabel columnLabel;
     private javax.swing.JLabel columnLabel2;
     private javax.swing.JLabel confirmBtnDiff;
@@ -814,8 +901,10 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel hardBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel mediumBtn;
+    private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel offBtn;
     private javax.swing.JLabel onBtn;
+    private javax.swing.JPanel parent;
     private javax.swing.JLabel rowLabel;
     private javax.swing.JLabel rowLabel2;
     private javax.swing.JLabel settingsBtn;
