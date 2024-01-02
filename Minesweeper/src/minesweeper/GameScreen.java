@@ -7,11 +7,15 @@ package minesweeper;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +26,7 @@ import javax.swing.JPanel;
  * @author nguye
  */
 
-public class GameScreen extends JFrame{
+public class GameScreen{
     public class MineTile extends JButton {
             int rows;
             int cols;
@@ -43,7 +47,7 @@ public class GameScreen extends JFrame{
         JLabel textLabel = new JLabel();
         JPanel textPanel = new JPanel();
         JPanel boardPanel = new JPanel();
-
+        
         int numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
         MineTile[][] board = new MineTile[numRows][numCols];
         ArrayList<MineTile> mineList;
@@ -54,6 +58,15 @@ public class GameScreen extends JFrame{
 
         public GameScreen() {
             //System.out.println("1");
+            URL resourceURL = frame.getClass().getResource("/iconFrame.png");
+            if (resourceURL != null) {
+            Image icon = new ImageIcon(resourceURL).getImage();
+            frame.setIconImage(icon);
+            } else {
+            System.err.println("Resource not found: img/iconFrame.png");
+            }
+            Image icon = Toolkit.getDefaultToolkit().getImage("src/iconFrame.png");
+            frame.setIconImage(icon);
             frame.setSize(boardWidth, boardHeight);
             frame.setLocation((int)(1217 - boardWidth) / 2,10);
             frame.setLocationRelativeTo(null);

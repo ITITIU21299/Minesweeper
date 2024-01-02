@@ -647,7 +647,7 @@ public class Menu extends javax.swing.JFrame {
         GameScreen gameScreen = new GameScreen();
         dispose();
         //diffPanel.setVisible(false);
-        gameScreen.setVisible(true);
+        //gameScreen.setVisible(true);
         //this.add(gameScreen);     
         //this.setComponentZOrder(gameScreen, 0);
         //this.pack();
