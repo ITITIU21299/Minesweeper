@@ -140,12 +140,12 @@ public class Menu extends javax.swing.JFrame {
         txtDiffExplain.setBounds(0, 240, 466, 40);
 
         rowLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        rowLabel2.setText("0 < rows <= 15");
+        rowLabel2.setText("7 < rows <= 15");
         diffPanel.add(rowLabel2);
         rowLabel2.setBounds(290, 80, 160, 40);
 
         columnLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        columnLabel2.setText("0 < columns <= 15");
+        columnLabel2.setText("7 < columns <= 15");
         diffPanel.add(columnLabel2);
         columnLabel2.setBounds(290, 130, 160, 40);
 
@@ -777,7 +777,7 @@ public class Menu extends javax.swing.JFrame {
         mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Press-new.png")));           
         hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle-new.png")));     
 
-        txtDiff = "Medium: 30% of tiles are bombs";
+        txtDiff = "Medium: 15% of tiles are bombs";
         txtDiffExplain.setText(txtDiff);
     }//GEN-LAST:event_mediumBtnMouseClicked
 
@@ -786,7 +786,7 @@ public class Menu extends javax.swing.JFrame {
             return;             
         mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Hover-new.png")));         
         
-        txtDiffExplain.setText("Medium: 30% of tiles are bombs");        
+        txtDiffExplain.setText("Medium: 15% of tiles are bombs");        
     }//GEN-LAST:event_mediumBtnMouseEntered
 
     private void mediumBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mediumBtnMouseExited
@@ -809,7 +809,7 @@ public class Menu extends javax.swing.JFrame {
         mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle-new.png")));           
         hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Press-new.png"))); 
         
-        txtDiff = "Hard: 60% of tiles are bombs";
+        txtDiff = "Hard: 25% of tiles are bombs";
         txtDiffExplain.setText(txtDiff);        
     }//GEN-LAST:event_hardBtnMouseClicked
 
@@ -818,7 +818,7 @@ public class Menu extends javax.swing.JFrame {
             return;     
         hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Hover-new.png")));  
         
-        txtDiffExplain.setText("Hard: 60% of tiles are bombs");                
+        txtDiffExplain.setText("Hard: 25% of tiles are bombs");                
     }//GEN-LAST:event_hardBtnMouseEntered
 
     private void hardBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hardBtnMouseExited
@@ -873,11 +873,8 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a difficulty", "Warning",JOptionPane.WARNING_MESSAGE);   
             return;
         } 
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(diff, row, col);
         cl = (CardLayout) (parent.getLayout());
-        
-        row = 15;
-        col = 15;
         
         parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
         parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);

@@ -80,8 +80,12 @@ public class GameScreen extends JPanel {
 
 
     private JButton saveButton;
-    public GameScreen() {
+    public GameScreen(int diff, int row, int col) {
         System.out.println("1");
+        difficulty = diff;
+        setDifficulty();
+        numRows = row;
+        numCols = col;
         this.setSize(boardWidth, boardHeight);
         this.setLocation((int) (1217 - boardWidth) / 2, 10);
         // this.setLocationRelativeTo(null);
@@ -216,20 +220,31 @@ public class GameScreen extends JPanel {
 
         return advancedHint;
     }
-
+    
+    private void setDifficulty(){
+        switch (difficulty){
+            case 0:
+                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+                break;
+            case 1:
+                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
+                break;
+            case 2:
+                numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
+                break;
+        }
+    }
+    
     private void initializeTimer() {
         secondsPassed = 0;
         switch (difficulty) {
             case 0:
-                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
-                timeLimit=300;
+                timeLimit = 300;
                 break;
             case 1:
-                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
                 timeLimit = 200;
                 break;
             case 2:
-                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
                 timeLimit = 100;
                 break;
             // Add more cases for additional difficulty levels if needed
