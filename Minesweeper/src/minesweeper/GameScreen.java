@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,17 +25,24 @@ import javax.swing.*;
  * @author nguye
  */
 
-public class GameScreen {
+public class GameScreen extends JPanel {
 
     public class MineTile extends JButton {
 
         int rows;
         int cols;
         boolean flagCheck = false;
+        boolean flagged = false;
 
         public MineTile(int rows, int cols) {
             this.rows = rows;
             this.cols = cols;
+        }
+        public boolean isFlagged() {
+            return flagged;
+        }
+        public void setFlagged(boolean flagged) {
+            this.flagged = flagged;
         }
     }
 
@@ -45,7 +53,7 @@ public class GameScreen {
     int boardHeight = numRows * tileSize;
 
 
-    JFrame frame = new JFrame("Minesweeper");
+    //  this = new  this("Minesweeper");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
@@ -66,15 +74,20 @@ public class GameScreen {
     private Timer timer;
     private int secondsPassed;
     private int timeLimit;
+    private JButton pauseResumeButton;
+    private boolean gamePaused = false;
+    private JButton advancedHintButton;
 
+
+    private JButton saveButton;
     public GameScreen() {
         System.out.println("1");
-        frame.setSize(boardWidth, boardHeight);
-        frame.setLocation((int) (1217 - boardWidth) / 2, 10);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        this.setSize(boardWidth, boardHeight);
+        this.setLocation((int) (1217 - boardWidth) / 2, 10);
+        // this.setLocationRelativeTo(null);
+        // this.setResizable(false);
+        // this.setDefaultCloseOperation(  this.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
 
         textLabel.setFont(new Font("Arial", Font.BOLD, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -83,17 +96,41 @@ public class GameScreen {
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        frame.add(textPanel, BorderLayout.NORTH);
+        this.add(textPanel, BorderLayout.NORTH);
+
 
 
         mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
-        frame.add(mineLabel, BorderLayout.SOUTH);
+        this.add(mineLabel, BorderLayout.SOUTH);
 
         boardPanel.setLayout(new GridLayout(numRows, numCols));
-        frame.add(boardPanel);
+        this.add(boardPanel);
 
+
+        pauseResumeButton = new JButton("Pause");
+        pauseResumeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                togglePauseResume();
+            }
+        });
+
+        advancedHintButton = new JButton("Advanced Hint");
+        advancedHintButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provideAdvancedHint();
+            }
+        });
+        textPanel.add(advancedHintButton, BorderLayout.WEST);
+
+        // Add the Pause/Resume button to the GUI
+        textPanel.add(pauseResumeButton, BorderLayout.EAST);
+        saveButton = new JButton("Save Game");
+
+        // ... (Existing code)
         for (int rows = 0; rows < numRows; rows++) {
             for (int cols = 0; cols < numCols; cols++) {
                 MineTile tile = new MineTile(rows, cols);
@@ -135,59 +172,98 @@ public class GameScreen {
                     }
                 });
                 boardPanel.add(tile);
-
-
             }
         }
-        frame.setVisible(true);
+        this.setVisible(true);
         initializeTimer();
         generateMines();
         timer.start();
 
     }
+
+    private void provideAdvancedHint() {
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                MineTile tile = board[row][col];
+                if (tile.isEnabled() && !tile.isFlagged()) {
+                    int advancedHint = calculateAdvancedHint(row, col);
+                    if (advancedHint > 0) {
+                        tile.setText(String.valueOf(advancedHint));
+                    }
+                }
+            }
+        }
+    }
+    private int calculateAdvancedHint(int r, int c) {
+        int advancedHint = 0;
+
+        // Add your advanced hint calculation logic here
+        // Example: Check for patterns or advanced strategies
+        // This is just a placeholder example, replace with actual logic
+
+        int minesFound = 0;
+
+        minesFound += countMine(r - 1, c - 1);
+        minesFound += countMine(r - 1, c);
+        minesFound += countMine(r - 1, c + 1);
+        minesFound += countMine(r, c - 1);
+        minesFound += countMine(r, c + 1);
+        minesFound += countMine(r + 1, c - 1);
+        minesFound += countMine(r + 1, c);
+        minesFound += countMine(r + 1, c + 1);
+
+        advancedHint = minesFound;
+
+        return advancedHint;
+    }
+
     private void initializeTimer() {
         secondsPassed = 0;
+        switch (difficulty) {
+            case 0:
+                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
+                timeLimit=300;
+                break;
+            case 1:
+                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+                timeLimit = 200;
+                break;
+            case 2:
+                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
+                timeLimit = 100;
+                break;
+            // Add more cases for additional difficulty levels if needed
+
+        }
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 secondsPassed++;
                 updateTimerLabel();
-                if (secondsPassed >= timeLimit) {
-                    // Time limit reached, implement game over logic or end the game
-                    timer.stop();
-                    gameOver = true;
-                    textLabel.setText("Time's up! Game Over!");
+                if (!gamePaused) {
+                    if(secondsPassed>timeLimit){
+
+                    revealMine();
                 }
-            }
+            }}
         });
-    }    private void updateTimerLabel() {
+    }
+    private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
-        textLabel.setText("Number of mines: " + numberOfMines + "   |   Time: " + secondsPassed + " seconds");
+        textLabel.setText("Time Limit: " + timeLimit + "   |   Time: " + secondsPassed + " seconds");
     }
 
-    private void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-        // Adjust the number of mines or any other parameters based on the difficulty level
-        switch (difficulty) {
-            case 1:
-                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
-                timeLimit = 300;
-                break;
-            case 2:
-                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-                timeLimit = 600;
-                break;
-            case 3:
-                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
-                timeLimit = 900;
-                break;
-            // Add more cases for additional difficulty levels if needed
+    private void togglePauseResume() {
+        gamePaused = !gamePaused;
+        if (gamePaused) {
+            timer.stop();
+            pauseResumeButton.setText("Resume");
+        } else {
+            timer.start();
+            pauseResumeButton.setText("Pause");
         }
-        initializeTimer();
-        // Update the display or restart the game with new parameters
-        // For example, you may want to call a method like resetGame() here
-        // resetGame();
     }
+
 
 
     public void generateMines() {
@@ -224,7 +300,6 @@ public class GameScreen {
             return;
         }
         tile.setEnabled(false);
-        tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
         tilesClicked++;
 
         int minesFound = 0;
@@ -242,27 +317,35 @@ public class GameScreen {
             switch (minesFound) {
                 case 1:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     break;
                 case 2:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     break;
                 case 3:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     break;
                 case 4:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     break;
                 case 5:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     break;
                 case 6:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     break;
                 case 7:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     break;
                 case 8:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     break;
             }
         } else {
@@ -303,4 +386,133 @@ public class GameScreen {
         numberOfFlags--;
         mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
     }
+
+    private static class GameState implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        // Add necessary fields to represent the game state
+        private int numRows;
+        private int numCols;
+        private int numberOfMines;
+        private int numberOfFlags;
+        private int secondsPassed;
+        private MineTile[][] board;  // Added to store the state of each MineTile
+        // ... (Add more fields as needed)
+
+        // Constructor to initialize the game state
+        public GameState(int numRows, int numCols, int numberOfMines, int numberOfFlags, int secondsPassed, MineTile[][] board) {
+            this.numRows = numRows;
+            this.numCols = numCols;
+            this.numberOfMines = numberOfMines;
+            this.numberOfFlags = numberOfFlags;
+            this.secondsPassed = secondsPassed;
+            this.board = board;  // Store the state of each MineTile
+            // ... (Initialize other fields as needed)
+        }
+    }
+
+
+
+
+
+
+    private void saveGame() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("minesweeper.sav"))) {
+            GameState gameState = new GameState(numRows, numCols, numberOfMines, numberOfFlags, secondsPassed, board);
+            // ... (Add more fields to gameState as needed)
+            outputStream.writeObject(gameState);
+            System.out.println("Game saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Add a new method to load the game state from a file
+    private void loadGame() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("minesweeper.sav"))) {
+            GameState gameState = (GameState) inputStream.readObject();
+            // ... (Retrieve fields from gameState as needed)
+
+            // Apply the loaded game state
+            numRows = gameState.numRows;
+            numCols = gameState.numCols;
+            numberOfMines = gameState.numberOfMines;
+            numberOfFlags = gameState.numberOfFlags;
+            secondsPassed = gameState.secondsPassed;
+            board = gameState.board;  // Restore the state of each MineTile
+            // ... (Apply other fields as needed)
+
+            // Update the GUI components based on the loaded game state
+            updateGameUI();
+
+            System.out.println("Game loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Add a new method to update the GUI components based on the loaded game state
+    private void updateGameUI() {
+        // Clear existing components
+        textPanel.removeAll();
+        boardPanel.removeAll();
+
+        // Update the size and location of the GameScreen
+        this.setSize(numCols * tileSize, numRows * tileSize);
+        this.setLocation((int) (1217 - numCols * tileSize) / 2, 10);
+
+        // Recreate components with the loaded board size
+        textLabel.setText("Number of mines: " + Integer.toString(numberOfMines));
+        textPanel.add(textLabel);
+        this.add(textPanel, BorderLayout.NORTH);
+
+        mineLabel.setText("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        this.add(mineLabel, BorderLayout.SOUTH);
+
+        boardPanel.setLayout(new GridLayout(numRows, numCols));
+        this.add(boardPanel);
+
+        // Recreate the board array with the loaded size
+        // Note: MineTile objects are already loaded from the serialized state
+        // and the references are stored in the board array
+        // No need to recreate MineTile objects, just update the GUI
+        for (int rows = 0; rows < numRows; rows++) {
+            for (int cols = 0; cols < numCols; cols++) {
+                MineTile tile = board[rows][cols];
+                tile.setFocusable(false);
+                tile.setMargin(new Insets(0, 0, 0, 0));
+                tile.setFont(new Font("Arial Unicode MS", Font.PLAIN, 45));
+                tile.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        // ... (Existing code)
+                    }
+                });
+                boardPanel.add(tile);
+            }
+        }
+
+        // Repaint the components
+        revalidate();
+        repaint();
+
+        // Initialize the timer with the loaded time limit
+        initializeTimer();
+    }
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
