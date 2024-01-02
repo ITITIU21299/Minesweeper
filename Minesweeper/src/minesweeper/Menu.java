@@ -92,20 +92,15 @@ public class Menu extends javax.swing.JFrame {
 
         diffPanel.setLayout(null);
 
-        txtRow.setBackground(new java.awt.Color(255, 255, 255));
         txtRow.setFont(new Font("Open Sans", Font.BOLD, 22));
-        txtRow.setForeground(new java.awt.Color(0, 0, 0));
         diffPanel.add(txtRow);
         txtRow.setBounds(183, 80, 100, 40);
 
-        txtColumn.setBackground(new java.awt.Color(255, 255, 255));
         txtColumn.setFont(new Font("Open Sans", Font.BOLD, 22));
-        txtColumn.setForeground(new java.awt.Color(0, 0, 0));
         diffPanel.add(txtColumn);
         txtColumn.setBounds(183, 130, 100, 40);
 
         txtDiffExplain.setFont(new Font("Open Sans", Font.BOLD, 19));
-        txtDiffExplain.setForeground(new java.awt.Color(0, 0, 0));
         txtDiffExplain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtDiffExplain.setLabelFor(diffPanel);
         txtDiffExplain.setText("Explain difficulty");
@@ -115,19 +110,16 @@ public class Menu extends javax.swing.JFrame {
         txtDiffExplain.setBounds(0, 240, 466, 40);
 
         rowLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        rowLabel2.setForeground(new java.awt.Color(0, 0, 0));
         rowLabel2.setText("0 < rows <= 15");
         diffPanel.add(rowLabel2);
         rowLabel2.setBounds(300, 80, 160, 40);
 
         columnLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        columnLabel2.setForeground(new java.awt.Color(0, 0, 0));
         columnLabel2.setText("0 < columns <= 15");
         diffPanel.add(columnLabel2);
         columnLabel2.setBounds(300, 130, 160, 40);
 
         rowLabel.setFont(new Font("Open Sans", Font.BOLD, 18));
-        rowLabel.setForeground(new java.awt.Color(0, 0, 0));
         rowLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         rowLabel.setLabelFor(diffPanel);
         rowLabel.setText("Rows :");
@@ -136,7 +128,6 @@ public class Menu extends javax.swing.JFrame {
         rowLabel.setBounds(46, 80, 120, 40);
 
         columnLabel.setFont(new Font("Open Sans", Font.BOLD, 18));
-        columnLabel.setForeground(new java.awt.Color(0, 0, 0));
         columnLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         columnLabel.setLabelFor(diffPanel);
         columnLabel.setText("Columns :");
@@ -146,7 +137,6 @@ public class Menu extends javax.swing.JFrame {
         columnLabel.setBounds(46, 130, 120, 40);
 
         titleDiff.setFont(new Font("Open Sans", Font.BOLD, 28));
-        titleDiff.setForeground(new java.awt.Color(0, 0, 0));
         titleDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleDiff.setLabelFor(diffPanel);
         titleDiff.setText("Set rows and columns");
@@ -273,7 +263,6 @@ public class Menu extends javax.swing.JFrame {
         settingsPanel.setLayout(null);
 
         titleSettings.setFont(new Font("Open Sans", Font.BOLD, 28));
-        titleSettings.setForeground(new java.awt.Color(0, 0, 0));
         titleSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleSettings.setLabelFor(diffPanel);
         titleSettings.setText("Sound");
@@ -656,10 +645,15 @@ public class Menu extends javax.swing.JFrame {
             return;
         } 
         GameScreen gameScreen = new GameScreen();
-        diffPanel.setVisible(false);
+        dispose();
+        //diffPanel.setVisible(false);
         gameScreen.setVisible(true);
-        this.add(gameScreen);       
-        gameScreen.revalidate();
+        //this.add(gameScreen);     
+        //this.setComponentZOrder(gameScreen, 0);
+        //this.pack();
+        //GameScreenPanel.add(gameScreen);
+        //gameScreen.repaint();
+        //gameScreen.revalidate();
     }//GEN-LAST:event_confirmBtnDiffMouseClicked
 
     private void confirmBtnDiffMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMouseEntered
