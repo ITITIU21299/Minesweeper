@@ -66,7 +66,8 @@ public class GameScreen extends JPanel {
     private Timer timer;
     private int secondsPassed;
     private int timeLimit;
-
+    private JButton pauseResumeButton;
+    private boolean gamePaused = false;
     public GameScreen() {
         System.out.println("1");
         this.setSize(boardWidth, boardHeight);
@@ -86,6 +87,7 @@ public class GameScreen extends JPanel {
         this.add(textPanel, BorderLayout.NORTH);
 
 
+
         mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -93,6 +95,22 @@ public class GameScreen extends JPanel {
 
         boardPanel.setLayout(new GridLayout(numRows, numCols));
         this.add(boardPanel);
+
+
+        pauseResumeButton = new JButton("Pause");
+        pauseResumeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                togglePauseResume();
+            }
+        });
+
+        // Add the Pause/Resume button to the GUI
+        textPanel.add(pauseResumeButton, BorderLayout.EAST);
+
+
+
+
 
         for (int rows = 0; rows < numRows; rows++) {
             for (int cols = 0; cols < numCols; cols++) {
@@ -145,49 +163,53 @@ public class GameScreen extends JPanel {
         timer.start();
 
     }
+
     private void initializeTimer() {
         secondsPassed = 0;
+        switch (difficulty) {
+            case 0:
+                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
+                timeLimit=300;
+                break;
+            case 1:
+                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+                timeLimit = 200;
+                break;
+            case 2:
+                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
+                timeLimit = 100;
+                break;
+            // Add more cases for additional difficulty levels if needed
+
+        }
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 secondsPassed++;
                 updateTimerLabel();
-                if (secondsPassed >= timeLimit) {
-                    // Time limit reached, implement game over logic or end the game
-                    timer.stop();
-                    gameOver = true;
-                    textLabel.setText("Time's up! Game Over!");
+                if (!gamePaused) {
+                    if(secondsPassed>timeLimit){
+
+                    revealMine();
                 }
-            }
+            }}
         });
     }    private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
-        textLabel.setText("Number of mines: " + numberOfMines + "   |   Time: " + secondsPassed + " seconds");
+        textLabel.setText("Time Limit: " + timeLimit + "   |   Time: " + secondsPassed + " seconds");
     }
 
-    private void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-        // Adjust the number of mines or any other parameters based on the difficulty level
-        switch (difficulty) {
-            case 1:
-                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
-                timeLimit = 30000;
-                break;
-            case 2:
-                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-                timeLimit = 60000;
-                break;
-            case 3:
-                numberOfMines = Math.round((60 * numRows * numCols) / 100.0f);
-                timeLimit = 90000;
-                break;
-            // Add more cases for additional difficulty levels if needed
+    private void togglePauseResume() {
+        gamePaused = !gamePaused;
+        if (gamePaused) {
+            timer.stop();
+            pauseResumeButton.setText("Resume");
+        } else {
+            timer.start();
+            pauseResumeButton.setText("Pause");
         }
-        initializeTimer();
-        // Update the display or restart the game with new parameters
-        // For example, you may want to call a method like resetGame() here
-        // resetGame();
     }
+
 
 
     public void generateMines() {
