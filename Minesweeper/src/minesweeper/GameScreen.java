@@ -171,15 +171,15 @@ public class GameScreen extends JPanel {
         switch (difficulty) {
             case 1:
                 numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
-                timeLimit = 300;
+                timeLimit = 30000;
                 break;
             case 2:
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-                timeLimit = 600;
+                timeLimit = 60000;
                 break;
             case 3:
-                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
-                timeLimit = 900;
+                numberOfMines = Math.round((60 * numRows * numCols) / 100.0f);
+                timeLimit = 90000;
                 break;
             // Add more cases for additional difficulty levels if needed
         }
@@ -224,7 +224,6 @@ public class GameScreen extends JPanel {
             return;
         }
         tile.setEnabled(false);
-        tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
         tilesClicked++;
 
         int minesFound = 0;
@@ -242,27 +241,35 @@ public class GameScreen extends JPanel {
             switch (minesFound) {
                 case 1:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     break;
                 case 2:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     break;
                 case 3:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     break;
                 case 4:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     break;
                 case 5:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     break;
                 case 6:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     break;
                 case 7:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     break;
                 case 8:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
+                    tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     break;
             }
         } else {
