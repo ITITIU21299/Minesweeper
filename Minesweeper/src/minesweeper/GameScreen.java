@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  * @author nguye
  */
 
-public class GameScreen{
+public class GameScreen extends JPanel{
     public class MineTile extends JButton {
             int rows;
             int cols;
@@ -34,12 +34,12 @@ public class GameScreen{
         }
 
         int tileSize = 40;
-        int numRows = 8;
-        int numCols = 8;
+        int numRows = 15;
+        int numCols = 15;
         int boardWidth = numCols * tileSize;
         int boardHeight = numRows * tileSize;
 
-        JFrame frame = new JFrame("Minesweeper");
+        //JPanel frame = new JPanel(); //("Minesweeper");
         JLabel textLabel = new JLabel();
         JPanel textPanel = new JPanel();
         JPanel boardPanel = new JPanel();
@@ -53,11 +53,13 @@ public class GameScreen{
         boolean gameOver = false;
 
         public GameScreen() {
-            frame.setSize(boardWidth, boardHeight);
-            frame.setLocationRelativeTo(null);
-            frame.setResizable(false);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLayout(new BorderLayout());
+            System.out.println("1");
+            this.setSize(boardWidth, boardHeight);
+            this.setLocation((int)(1217 - boardWidth) / 2,10);
+            //frame.setLocationRelativeTo(null);
+            //frame.setResizable(false);
+            //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setLayout(new BorderLayout());
 
             textLabel.setFont(new Font("Arial", Font.BOLD, 25));
             textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -66,10 +68,10 @@ public class GameScreen{
 
             textPanel.setLayout(new BorderLayout());
             textPanel.add(textLabel);
-            frame.add(textPanel, BorderLayout.NORTH);
+            this.add(textPanel, BorderLayout.NORTH);
 
             boardPanel.setLayout(new GridLayout(numRows, numCols));
-            frame.add(boardPanel);
+            this.add(boardPanel);
 
             for (int rows = 0; rows < numRows; rows++) {
                 for (int cols = 0; cols < numCols; cols++) {
@@ -109,7 +111,7 @@ public class GameScreen{
                     boardPanel.add(tile);
                 }
             }
-            frame.setVisible(true);
+            this.setVisible(true);
 
             generateMines();
         }

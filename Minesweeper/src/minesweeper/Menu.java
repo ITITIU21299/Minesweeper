@@ -4,9 +4,19 @@
  */
 package minesweeper;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -17,6 +27,9 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
+    int diff = 4;
+    String txtDiff;
+    
     public Menu() {
         initComponents();
         URL resourceURL = this.getClass().getResource("/iconFrame.png");
@@ -26,11 +39,10 @@ public class Menu extends javax.swing.JFrame {
         } else {
             System.err.println("Resource not found: img/iconFrame.png");
            }
-        easyBtn.setVisible(false);
-        mediumBtn.setVisible(false);
-        hardBtn.setVisible(false);
-        backBtn.setVisible(false);
 
+        txtDiff = "Explain difficulty";
+        java.awt.event.MouseEvent evt;
+        
     }
 
     /**
@@ -42,13 +54,31 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        startBtn = new javax.swing.JLabel();
-        settingsBtn = new javax.swing.JLabel();
-        exitBtn = new javax.swing.JLabel();
+        diffPanel = new javax.swing.JPanel();
+        txtRow = new javax.swing.JTextField();
+        txtColumn = new javax.swing.JTextField();
+        txtDiffExplain = new javax.swing.JLabel();
+        rowLabel2 = new javax.swing.JLabel();
+        columnLabel2 = new javax.swing.JLabel();
+        rowLabel = new javax.swing.JLabel();
+        columnLabel = new javax.swing.JLabel();
+        titleDiff = new javax.swing.JLabel();
         easyBtn = new javax.swing.JLabel();
         mediumBtn = new javax.swing.JLabel();
         hardBtn = new javax.swing.JLabel();
-        backBtn = new javax.swing.JLabel();
+        confirmBtnDiff = new javax.swing.JLabel();
+        backBtnDiff = new javax.swing.JLabel();
+        bgLabel = new javax.swing.JLabel();
+        settingsPanel = new javax.swing.JPanel();
+        titleSettings = new javax.swing.JLabel();
+        onBtn = new javax.swing.JLabel();
+        offBtn = new javax.swing.JLabel();
+        confirmBtnSettings = new javax.swing.JLabel();
+        backBtnSettings = new javax.swing.JLabel();
+        bgLabel1 = new javax.swing.JLabel();
+        startBtn = new javax.swing.JLabel();
+        settingsBtn = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -56,8 +86,301 @@ public class Menu extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1217, 684));
         setMinimumSize(new java.awt.Dimension(1217, 684));
         setPreferredSize(new java.awt.Dimension(1217, 684));
+        setResizable(false);
         setSize(new java.awt.Dimension(1217, 684));
         getContentPane().setLayout(null);
+
+        diffPanel.setLayout(null);
+
+        txtRow.setBackground(new java.awt.Color(255, 255, 255));
+        txtRow.setFont(new Font("Open Sans", Font.BOLD, 22));
+        txtRow.setForeground(new java.awt.Color(0, 0, 0));
+        diffPanel.add(txtRow);
+        txtRow.setBounds(183, 80, 100, 40);
+
+        txtColumn.setBackground(new java.awt.Color(255, 255, 255));
+        txtColumn.setFont(new Font("Open Sans", Font.BOLD, 22));
+        txtColumn.setForeground(new java.awt.Color(0, 0, 0));
+        diffPanel.add(txtColumn);
+        txtColumn.setBounds(183, 130, 100, 40);
+
+        txtDiffExplain.setFont(new Font("Open Sans", Font.BOLD, 19));
+        txtDiffExplain.setForeground(new java.awt.Color(0, 0, 0));
+        txtDiffExplain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtDiffExplain.setLabelFor(diffPanel);
+        txtDiffExplain.setText("Explain difficulty");
+        txtDiffExplain.setToolTipText("");
+        txtDiffExplain.setAlignmentY(0.0F);
+        diffPanel.add(txtDiffExplain);
+        txtDiffExplain.setBounds(0, 240, 466, 40);
+
+        rowLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
+        rowLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        rowLabel2.setText("0 < rows <= 15");
+        diffPanel.add(rowLabel2);
+        rowLabel2.setBounds(300, 80, 160, 40);
+
+        columnLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
+        columnLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        columnLabel2.setText("0 < columns <= 15");
+        diffPanel.add(columnLabel2);
+        columnLabel2.setBounds(300, 130, 160, 40);
+
+        rowLabel.setFont(new Font("Open Sans", Font.BOLD, 18));
+        rowLabel.setForeground(new java.awt.Color(0, 0, 0));
+        rowLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        rowLabel.setLabelFor(diffPanel);
+        rowLabel.setText("Rows :");
+        rowLabel.setAlignmentY(0.0F);
+        diffPanel.add(rowLabel);
+        rowLabel.setBounds(46, 80, 120, 40);
+
+        columnLabel.setFont(new Font("Open Sans", Font.BOLD, 18));
+        columnLabel.setForeground(new java.awt.Color(0, 0, 0));
+        columnLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        columnLabel.setLabelFor(diffPanel);
+        columnLabel.setText("Columns :");
+        columnLabel.setToolTipText("");
+        columnLabel.setAlignmentY(0.0F);
+        diffPanel.add(columnLabel);
+        columnLabel.setBounds(46, 130, 120, 40);
+
+        titleDiff.setFont(new Font("Open Sans", Font.BOLD, 28));
+        titleDiff.setForeground(new java.awt.Color(0, 0, 0));
+        titleDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleDiff.setLabelFor(diffPanel);
+        titleDiff.setText("Set rows and columns");
+        titleDiff.setAlignmentY(0.0F);
+        diffPanel.add(titleDiff);
+        titleDiff.setBounds(0, 0, 466, 80);
+
+        easyBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Idle-new.png"))); // NOI18N
+        easyBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                easyBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                easyBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                easyBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                easyBtnMousePressed(evt);
+            }
+        });
+        diffPanel.add(easyBtn);
+        easyBtn.setBounds(17, 190, 133, 46);
+
+        mediumBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle-new.png"))); // NOI18N
+        mediumBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mediumBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mediumBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mediumBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mediumBtnMousePressed(evt);
+            }
+        });
+        diffPanel.add(mediumBtn);
+        mediumBtn.setBounds(167, 190, 133, 46);
+
+        hardBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle-new.png"))); // NOI18N
+        hardBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hardBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                hardBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                hardBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                hardBtnMousePressed(evt);
+            }
+        });
+        diffPanel.add(hardBtn);
+        hardBtn.setBounds(317, 190, 133, 46);
+
+        confirmBtnDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        confirmBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png"))); // NOI18N
+        confirmBtnDiff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmBtnDiffMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmBtnDiffMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmBtnDiffMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                confirmBtnDiffMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                confirmBtnDiffMouseReleased(evt);
+            }
+        });
+        diffPanel.add(confirmBtnDiff);
+        confirmBtnDiff.setBounds(267, 295, 133, 46);
+
+        backBtnDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png"))); // NOI18N
+        backBtnDiff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backBtnDiffMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backBtnDiffMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backBtnDiffMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backBtnDiffMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backBtnDiffMouseReleased(evt);
+            }
+        });
+        diffPanel.add(backBtnDiff);
+        backBtnDiff.setBounds(67, 295, 133, 46);
+
+        bgLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
+        bgLabel.setFont(new Font("Open Sans", Font.BOLD, 28));
+        bgLabel.setToolTipText("");
+        bgLabel.setAlignmentY(0.0F);
+        bgLabel.setRequestFocusEnabled(false);
+        diffPanel.add(bgLabel);
+        bgLabel.setBounds(0, 0, 466, 366);
+
+        diffPanel.setVisible(false);
+
+        getContentPane().add(diffPanel);
+        diffPanel.setBounds(375, 250, 466, 366);
+        diffPanel.getAccessibleContext().setAccessibleDescription("");
+
+        settingsPanel.setLayout(null);
+
+        titleSettings.setFont(new Font("Open Sans", Font.BOLD, 28));
+        titleSettings.setForeground(new java.awt.Color(0, 0, 0));
+        titleSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleSettings.setLabelFor(diffPanel);
+        titleSettings.setText("Sound");
+        titleSettings.setAlignmentY(0.0F);
+        settingsPanel.add(titleSettings);
+        titleSettings.setBounds(0, 0, 240, 80);
+
+        onBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        onBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png"))); // NOI18N
+        onBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                onBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                onBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                onBtnMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                onBtnMouseReleased(evt);
+            }
+        });
+        settingsPanel.add(onBtn);
+        onBtn.setBounds(230, 10, 80, 70);
+
+        offBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        offBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png"))); // NOI18N
+        offBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                offBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                offBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                offBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                offBtnMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                offBtnMouseReleased(evt);
+            }
+        });
+        settingsPanel.add(offBtn);
+        offBtn.setBounds(340, 10, 80, 70);
+
+        confirmBtnSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        confirmBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png"))); // NOI18N
+        confirmBtnSettings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmBtnSettingsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmBtnSettingsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmBtnSettingsMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                confirmBtnSettingsMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                confirmBtnSettingsMouseReleased(evt);
+            }
+        });
+        settingsPanel.add(confirmBtnSettings);
+        confirmBtnSettings.setBounds(267, 295, 133, 46);
+
+        backBtnSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png"))); // NOI18N
+        backBtnSettings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backBtnSettingsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backBtnSettingsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backBtnSettingsMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backBtnSettingsMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backBtnSettingsMouseReleased(evt);
+            }
+        });
+        settingsPanel.add(backBtnSettings);
+        backBtnSettings.setBounds(67, 295, 133, 46);
+
+        bgLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bgLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
+        bgLabel1.setToolTipText("");
+        bgLabel1.setAlignmentY(0.0F);
+        bgLabel1.setRequestFocusEnabled(false);
+        settingsPanel.add(bgLabel1);
+        bgLabel1.setBounds(0, 0, 466, 366);
+
+        settingsPanel.setVisible(false);
+
+        getContentPane().add(settingsPanel);
+        settingsPanel.setBounds(375, 250, 466, 366);
 
         startBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         startBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/startBtn-Idle.png"))); // NOI18N
@@ -79,7 +402,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(startBtn);
-        startBtn.setBounds(488, 290, 240, 82);
+        startBtn.setBounds(490, 290, 236, 82);
 
         settingsBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settingsBtn-Idle.png"))); // NOI18N
@@ -101,7 +424,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(settingsBtn);
-        settingsBtn.setBounds(488, 400, 240, 82);
+        settingsBtn.setBounds(490, 400, 236, 82);
 
         exitBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitBtn-Idle.png"))); // NOI18N
@@ -123,95 +446,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(exitBtn);
-        exitBtn.setBounds(488, 510, 240, 82);
-
-        easyBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Idle.png"))); // NOI18N
-        easyBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                easyBtnMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                easyBtnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                easyBtnMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                easyBtnMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                easyBtnMouseReleased(evt);
-            }
-        });
-        getContentPane().add(easyBtn);
-        easyBtn.setBounds(488, 290, 240, 82);
-
-        mediumBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle.png"))); // NOI18N
-        mediumBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mediumBtnMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                mediumBtnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                mediumBtnMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                mediumBtnMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                mediumBtnMouseReleased(evt);
-            }
-        });
-        getContentPane().add(mediumBtn);
-        mediumBtn.setBounds(488, 400, 240, 82);
-
-        hardBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle.png"))); // NOI18N
-        hardBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                hardBtnMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                hardBtnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                hardBtnMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                hardBtnMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                hardBtnMouseReleased(evt);
-            }
-        });
-        getContentPane().add(hardBtn);
-        hardBtn.setBounds(488, 510, 240, 82);
-
-        backBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle.png"))); // NOI18N
-        backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backBtnMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backBtnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                backBtnMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                backBtnMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                backBtnMouseReleased(evt);
-            }
-        });
-        getContentPane().add(backBtn);
-        backBtn.setBounds(290, 570, 146, 60);
+        exitBtn.setBounds(490, 510, 236, 82);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -224,11 +459,8 @@ public class Menu extends javax.swing.JFrame {
         startBtn.setVisible(false);
         settingsBtn.setVisible(false);
         exitBtn.setVisible(false);      
-        
-        easyBtn.setVisible(true);
-        mediumBtn.setVisible(true);
-        hardBtn.setVisible(true);
-        backBtn.setVisible(true);
+           
+        diffPanel.setVisible(true);          
     }//GEN-LAST:event_startBtnMouseClicked
 
     private void startBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startBtnMouseEntered
@@ -268,7 +500,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnMouseReleased
 
     private void settingsBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseClicked
-        // Go to settings
+        settingsPanel.setVisible(true);
     }//GEN-LAST:event_settingsBtnMouseClicked
 
     private void settingsBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsBtnMouseEntered
@@ -288,92 +520,255 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsBtnMouseReleased
 
     private void easyBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMouseClicked
-        // Start the game
+        if (diff == 0)
+            return;        
+       diff = 0;
+        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Press-new.png")));  
+        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle-new.png")));                 
+        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle-new.png")));                 
+        
+        txtDiff = "Easy: 10% of tiles are bombs";
+        txtDiffExplain.setText(txtDiff);
+        
     }//GEN-LAST:event_easyBtnMouseClicked
 
     private void easyBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMouseEntered
-        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Hover.png")));         
+        if (diff == 0)
+            return;
+        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Hover-new.png")));       
+        txtDiffExplain.setText("Easy: 10% of tiles are bombs");
     }//GEN-LAST:event_easyBtnMouseEntered
 
     private void easyBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMouseExited
-        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Idle.png")));         
+        if (diff == 0)
+            return;
+        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Idle-new.png")));         
+        txtDiffExplain.setText(txtDiff);        
     }//GEN-LAST:event_easyBtnMouseExited
 
-    private void easyBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMousePressed
-        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Press.png")));         
-        GameScreen gameScreen = new GameScreen();
-    }//GEN-LAST:event_easyBtnMousePressed
-
-    private void easyBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_easyBtnMouseReleased
-        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Hover.png")));         
-    }//GEN-LAST:event_easyBtnMouseReleased
+    private void easyBtnMousePressed(java.awt.event.MouseEvent evt) {                                     
+        easyBtnMouseClicked(evt);
+    }                                                                    
 
     private void mediumBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mediumBtnMouseClicked
-        // TODO add your handling code here:
+        if (diff == 1)
+            return;        
+        diff = 1;
+        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Idle-new.png")));          
+        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Press-new.png")));           
+        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle-new.png")));     
+
+        txtDiff = "Medium: 30% of tiles are bombs";
+        txtDiffExplain.setText(txtDiff);
     }//GEN-LAST:event_mediumBtnMouseClicked
 
     private void mediumBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mediumBtnMouseEntered
-        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Hover.png")));         
+        if (diff == 1)
+            return;             
+        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Hover-new.png")));         
+        
+        txtDiffExplain.setText("Medium: 30% of tiles are bombs");        
     }//GEN-LAST:event_mediumBtnMouseEntered
 
     private void mediumBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mediumBtnMouseExited
-        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle.png")));         
+        if (diff == 1)
+            return;     
+        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle-new.png")));        
+        
+        txtDiffExplain.setText(txtDiff);                
     }//GEN-LAST:event_mediumBtnMouseExited
 
     private void mediumBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mediumBtnMousePressed
-        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Press.png")));         
+        mediumBtnMouseClicked(evt);
     }//GEN-LAST:event_mediumBtnMousePressed
 
-    private void mediumBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mediumBtnMouseReleased
-        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Hover.png")));         
-    }//GEN-LAST:event_mediumBtnMouseReleased
-
     private void hardBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hardBtnMouseClicked
-        // TODO add your handling code here:
+        if (diff == 2)
+            return;        
+        diff = 2;
+        easyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/easyBtn-Idle-new.png")));          
+        mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle-new.png")));           
+        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Press-new.png"))); 
+        
+        txtDiff = "Hard: 60% of tiles are bombs";
+        txtDiffExplain.setText(txtDiff);        
     }//GEN-LAST:event_hardBtnMouseClicked
 
     private void hardBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hardBtnMouseEntered
-        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Hover.png")));         
+        if (diff == 2)
+            return;     
+        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Hover-new.png")));  
+        
+        txtDiffExplain.setText("Hard: 60% of tiles are bombs");                
     }//GEN-LAST:event_hardBtnMouseEntered
 
     private void hardBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hardBtnMouseExited
-        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle.png")));         
+        if (diff == 2)
+            return;     
+        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle-new.png")));  
+        
+        txtDiffExplain.setText(txtDiff);                
     }//GEN-LAST:event_hardBtnMouseExited
 
     private void hardBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hardBtnMousePressed
-        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Press.png")));         
+        hardBtnMouseClicked(evt);
     }//GEN-LAST:event_hardBtnMousePressed
 
-    private void hardBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hardBtnMouseReleased
-        hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Hover.png")));         
-    }//GEN-LAST:event_hardBtnMouseReleased
-
-    private void backBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseClicked
+    private void backBtnDiffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMouseClicked
         startBtn.setVisible(true);
         settingsBtn.setVisible(true);
         exitBtn.setVisible(true);      
         
-        easyBtn.setVisible(false);
-        mediumBtn.setVisible(false);
-        hardBtn.setVisible(false);
-        backBtn.setVisible(false);
-    }//GEN-LAST:event_backBtnMouseClicked
+        diffPanel.setVisible(false);
+    }//GEN-LAST:event_backBtnDiffMouseClicked
 
-    private void backBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseEntered
-        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover.png")));         
-    }//GEN-LAST:event_backBtnMouseEntered
+    private void backBtnDiffMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMouseEntered
+        backBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
+    }//GEN-LAST:event_backBtnDiffMouseEntered
 
-    private void backBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseExited
-        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle.png")));         
-    }//GEN-LAST:event_backBtnMouseExited
+    private void backBtnDiffMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMouseExited
+        backBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png")));         
+    }//GEN-LAST:event_backBtnDiffMouseExited
 
-    private void backBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMousePressed
-        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Press.png")));         
-    }//GEN-LAST:event_backBtnMousePressed
+    private void backBtnDiffMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMousePressed
+        backBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Press-new.png")));         
+    }//GEN-LAST:event_backBtnDiffMousePressed
 
-    private void backBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseReleased
-        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover.png")));         
-    }//GEN-LAST:event_backBtnMouseReleased
+    private void backBtnDiffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnDiffMouseReleased
+        backBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
+    }//GEN-LAST:event_backBtnDiffMouseReleased
+/**/
+    private void confirmBtnDiffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMouseClicked
+        String r = txtRow.getText();
+        String c = txtColumn.getText();
+        int row;
+        int col;
+        
+        try {
+            row = Integer.valueOf(r);
+            col = Integer.valueOf(c);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid rows and columns", "Warning",JOptionPane.WARNING_MESSAGE);            
+            return;
+        }
+        if (diff == 4) {
+            JOptionPane.showMessageDialog(null, "Please select a difficulty", "Warning",JOptionPane.WARNING_MESSAGE);   
+            return;
+        } 
+        GameScreen gameScreen = new GameScreen();
+        diffPanel.setVisible(false);
+        gameScreen.setVisible(true);
+        this.add(gameScreen);       
+        gameScreen.revalidate();
+    }//GEN-LAST:event_confirmBtnDiffMouseClicked
+
+    private void confirmBtnDiffMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMouseEntered
+        confirmBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Hover-new.png")));         
+    }//GEN-LAST:event_confirmBtnDiffMouseEntered
+
+    private void confirmBtnDiffMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMouseExited
+        confirmBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png")));         
+    }//GEN-LAST:event_confirmBtnDiffMouseExited
+
+    private void confirmBtnDiffMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMousePressed
+        confirmBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Press-new.png")));         
+    }//GEN-LAST:event_confirmBtnDiffMousePressed
+
+    private void confirmBtnDiffMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnDiffMouseReleased
+        confirmBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Hover-new.png")));         
+        // confirmBtnDiffMouseClicked(evt);
+    }//GEN-LAST:event_confirmBtnDiffMouseReleased
+
+    private void confirmBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMouseClicked
+        startBtn.setVisible(true);
+        settingsBtn.setVisible(true);
+        exitBtn.setVisible(true);      
+        
+        settingsPanel.setVisible(false);
+    }//GEN-LAST:event_confirmBtnSettingsMouseClicked
+
+    private void confirmBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMouseEntered
+        confirmBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Hover-new.png")));         
+    }//GEN-LAST:event_confirmBtnSettingsMouseEntered
+
+    private void confirmBtnSettingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMouseExited
+        confirmBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png")));         
+    }//GEN-LAST:event_confirmBtnSettingsMouseExited
+
+    private void confirmBtnSettingsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMousePressed
+        confirmBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Press-new.png")));         
+    }//GEN-LAST:event_confirmBtnSettingsMousePressed
+
+    private void confirmBtnSettingsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMouseReleased
+        confirmBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Hover-new.png")));         
+    }//GEN-LAST:event_confirmBtnSettingsMouseReleased
+
+    private void backBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseClicked
+          
+        
+        startBtn.setVisible(true);
+        settingsBtn.setVisible(true);
+        exitBtn.setVisible(true);      
+        
+        settingsPanel.setVisible(false);
+    }//GEN-LAST:event_backBtnSettingsMouseClicked
+
+    private void backBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseEntered
+        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
+    }//GEN-LAST:event_backBtnSettingsMouseEntered
+
+    private void backBtnSettingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseExited
+        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png")));         
+    }//GEN-LAST:event_backBtnSettingsMouseExited
+
+    private void backBtnSettingsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMousePressed
+        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Press-new.png")));         
+    }//GEN-LAST:event_backBtnSettingsMousePressed
+
+    private void backBtnSettingsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseReleased
+        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
+    }//GEN-LAST:event_backBtnSettingsMouseReleased
+
+    private void onBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnMouseClicked
+         
+    }//GEN-LAST:event_onBtnMouseClicked
+
+    private void onBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnMouseEntered
+        onBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Hover.png")));         
+    }//GEN-LAST:event_onBtnMouseEntered
+
+    private void onBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnMouseExited
+        onBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));         
+    }//GEN-LAST:event_onBtnMouseExited
+
+    private void onBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnMousePressed
+        onBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));         
+    }//GEN-LAST:event_onBtnMousePressed
+
+    private void onBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnMouseReleased
+        onBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Hover.png")));         
+    }//GEN-LAST:event_onBtnMouseReleased
+
+    private void offBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_offBtnMouseClicked
+
+    private void offBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_offBtnMouseEntered
+
+    private void offBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_offBtnMouseExited
+
+    private void offBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_offBtnMousePressed
+
+    private void offBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_offBtnMouseReleased
+
 
     /**
      * @param args the command line arguments
@@ -411,13 +806,31 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel backBtn;
+    private javax.swing.JLabel backBtnDiff;
+    private javax.swing.JLabel backBtnSettings;
+    private javax.swing.JLabel bgLabel;
+    private javax.swing.JLabel bgLabel1;
+    private javax.swing.JLabel columnLabel;
+    private javax.swing.JLabel columnLabel2;
+    private javax.swing.JLabel confirmBtnDiff;
+    private javax.swing.JLabel confirmBtnSettings;
+    private javax.swing.JPanel diffPanel;
     private javax.swing.JLabel easyBtn;
     private javax.swing.JLabel exitBtn;
     private javax.swing.JLabel hardBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel mediumBtn;
+    private javax.swing.JLabel offBtn;
+    private javax.swing.JLabel onBtn;
+    private javax.swing.JLabel rowLabel;
+    private javax.swing.JLabel rowLabel2;
     private javax.swing.JLabel settingsBtn;
+    private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel startBtn;
+    private javax.swing.JLabel titleDiff;
+    private javax.swing.JLabel titleSettings;
+    private javax.swing.JTextField txtColumn;
+    private javax.swing.JLabel txtDiffExplain;
+    private javax.swing.JTextField txtRow;
     // End of variables declaration//GEN-END:variables
 }

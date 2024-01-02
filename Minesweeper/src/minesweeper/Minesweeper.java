@@ -8,12 +8,6 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.font.GlyphVector;
-import javax.swing.*;
-import java.util.Random;
-import java.util.ArrayList;
 
 /**
  *
@@ -21,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Minesweeper {
 
-   public static void main(String[] args) {
+    public static void main(String[] args) {
         // TODO code application logic here
         Menu menu = new Menu();
         menu.setVisible(true);
