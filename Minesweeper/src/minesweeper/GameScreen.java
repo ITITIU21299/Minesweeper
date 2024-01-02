@@ -10,16 +10,14 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -64,6 +62,10 @@ public class GameScreen {
     int tilesClicked = 0;
     boolean gameOver = false;
 
+    private int difficulty;
+    private Timer timer;
+    private int secondsPassed;
+    private int timeLimit;
 
     public GameScreen() {
         System.out.println("1");
@@ -138,9 +140,55 @@ public class GameScreen {
             }
         }
         frame.setVisible(true);
-        
+        initializeTimer();
         generateMines();
+        timer.start();
+
     }
+    private void initializeTimer() {
+        secondsPassed = 0;
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                secondsPassed++;
+                updateTimerLabel();
+                if (secondsPassed >= timeLimit) {
+                    // Time limit reached, implement game over logic or end the game
+                    timer.stop();
+                    gameOver = true;
+                    textLabel.setText("Time's up! Game Over!");
+                }
+            }
+        });
+    }    private void updateTimerLabel() {
+        // Update a label or perform any action with the elapsed time
+        textLabel.setText("Number of mines: " + numberOfMines + "   |   Time: " + secondsPassed + " seconds");
+    }
+
+    private void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+        // Adjust the number of mines or any other parameters based on the difficulty level
+        switch (difficulty) {
+            case 1:
+                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
+                timeLimit = 300;
+                break;
+            case 2:
+                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+                timeLimit = 600;
+                break;
+            case 3:
+                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
+                timeLimit = 900;
+                break;
+            // Add more cases for additional difficulty levels if needed
+        }
+        initializeTimer();
+        // Update the display or restart the game with new parameters
+        // For example, you may want to call a method like resetGame() here
+        // resetGame();
+    }
+
 
     public void generateMines() {
         mineList = new ArrayList<MineTile>();
