@@ -354,34 +354,42 @@ public class GameScreen extends JPanel {
                 case 1:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
+                    tile.setText("");
                     break;
                 case 2:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
+                    tile.setText("");
                     break;
                 case 3:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
+                    tile.setText("");
                     break;
                 case 4:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
+                    tile.setText("");
                     break;
                 case 5:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
+                    tile.setText("");
                     break;
                 case 6:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
+                    tile.setText("");
                     break;
                 case 7:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
+                    tile.setText("");
                     break;
                 case 8:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
+                    tile.setText("");
                     break;
             }
         } else {
@@ -548,18 +556,6 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
         // Initialize the timer with the loaded time limit
         initializeTimer();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
