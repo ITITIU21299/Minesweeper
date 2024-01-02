@@ -107,7 +107,7 @@ public class GameScreen extends JPanel {
 
 
 
-        mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        mineLabel = new JLabel("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 25));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(mineLabel, BorderLayout.SOUTH);
@@ -430,7 +430,7 @@ public class GameScreen extends JPanel {
 
     public void flagRemoved() {
         numberOfFlags--;
-        mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        mineLabel.setText("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
     }
 
     private static class GameState implements Serializable {
