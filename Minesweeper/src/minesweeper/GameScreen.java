@@ -147,47 +147,39 @@ public class GameScreen extends JPanel {
     }
     private void initializeTimer() {
         secondsPassed = 0;
+        switch (difficulty) {
+            case 0:
+                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
+                timeLimit=300;
+                break;
+            case 1:
+                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+                timeLimit = 200;
+                break;
+            case 2:
+                numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
+                timeLimit = 100;
+                break;
+            // Add more cases for additional difficulty levels if needed
+
+        }
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 secondsPassed++;
                 updateTimerLabel();
-                if (secondsPassed >= timeLimit) {
-                    // Time limit reached, implement game over logic or end the game
-                    timer.stop();
-                    gameOver = true;
-                    textLabel.setText("Time's up! Game Over!");
+                if(secondsPassed>timeLimit){
+
+                    revealMine();
                 }
             }
         });
     }    private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
-        textLabel.setText("Number of mines: " + numberOfMines + "   |   Time: " + secondsPassed + " seconds");
+        textLabel.setText("Time Limit: " + timeLimit + "   |   Time: " + secondsPassed + " seconds");
     }
 
-    private void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-        // Adjust the number of mines or any other parameters based on the difficulty level
-        switch (difficulty) {
-            case 1:
-                numberOfMines = Math.round((5 * numRows * numCols) / 100.0f);
-                timeLimit = 30000;
-                break;
-            case 2:
-                numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-                timeLimit = 60000;
-                break;
-            case 3:
-                numberOfMines = Math.round((60 * numRows * numCols) / 100.0f);
-                timeLimit = 90000;
-                break;
-            // Add more cases for additional difficulty levels if needed
-        }
-        initializeTimer();
-        // Update the display or restart the game with new parameters
-        // For example, you may want to call a method like resetGame() here
-        // resetGame();
-    }
+
 
 
     public void generateMines() {
