@@ -104,6 +104,7 @@ public class Menu extends javax.swing.JFrame {
         settingsBtn = new javax.swing.JLabel();
         exitBtn = new javax.swing.JLabel();
         bgMenu = new javax.swing.JLabel();
+        saveBtn = new javax.swing.JLabel();
         pauseBtn = new javax.swing.JLabel();
         menuBtn = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -590,6 +591,29 @@ public class Menu extends javax.swing.JFrame {
 
         getContentPane().add(parent);
         parent.setBounds(375, 240, 466, 366);
+
+        saveBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Idle-new.png"))); // NOI18N
+        pauseBtn.setVisible(false);
+        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                saveBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                saveBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                saveBtnMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                saveBtnMouseReleased(evt);
+            }
+        });
+        getContentPane().add(saveBtn);
+        saveBtn.setBounds(70, 380, 133, 60);
 
         pauseBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pauseBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pauseBtn-Idle-new.png"))); // NOI18N
@@ -1123,6 +1147,27 @@ public class Menu extends javax.swing.JFrame {
         backBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
     }//GEN-LAST:event_backBtnPauseMouseReleased
 
+    private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
+        JOptionPane.showMessageDialog(null, "Saved", "Notification",JOptionPane.INFORMATION_MESSAGE);            
+        // Save here
+    }//GEN-LAST:event_saveBtnMouseClicked
+
+    private void saveBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseEntered
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Hover-new.png")));                 
+    }//GEN-LAST:event_saveBtnMouseEntered
+
+    private void saveBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseExited
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Idle-new.png")));                 
+    }//GEN-LAST:event_saveBtnMouseExited
+
+    private void saveBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMousePressed
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Press-new.png")));                 
+    }//GEN-LAST:event_saveBtnMousePressed
+
+    private void saveBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseReleased
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Hover-new.png")));                 
+    }//GEN-LAST:event_saveBtnMouseReleased
+
 
     /**
      * @param args the command line arguments
@@ -1189,6 +1234,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel pausePanel;
     private javax.swing.JLabel rowLabel;
     private javax.swing.JLabel rowLabel2;
+    private javax.swing.JLabel saveBtn;
     private javax.swing.JLabel settingsBtn;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel startBtn;
