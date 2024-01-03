@@ -44,8 +44,14 @@ public class GameScreen extends JPanel {
         public boolean isFlagged() {
             return flagged;
         }
-        public void setFlagged(boolean flagged) {
-            this.flagged = flagged;
+        private boolean cleared = false;
+
+        public boolean isCleared() {
+            return cleared;
+        }
+
+        public void setCleared(boolean cleared) {
+            this.cleared = cleared;
         }
     }
 
@@ -85,16 +91,20 @@ public class GameScreen extends JPanel {
     public static boolean gamePaused = false;
     private JButton advancedHintButton;
 
-    private int playerScore;
-    private static final int SCORE_FACTOR_PER_MINE = 100;
+
     private int elapsedTimeSeconds;
     private int MaxMine=numberOfMines;
     private int currentLives;
 
+    private static int BASE_SCORE = 100; // Adjust the base score as needed
+    private static final int DEDUCTION_AMOUNT = 5; // Points deducted for each mine not cleared in time
+    private Timer deductionTimer;
+    int Time=10000;
 
 
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
+
 
 
 
@@ -114,6 +124,7 @@ public class GameScreen extends JPanel {
         textLabel = new JLabel();
         textPanel = new JPanel();
         boardPanel = new JPanel();
+
 
         textLabel.setFont(new Font("Arial", Font.BOLD, 22));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -164,7 +175,7 @@ public class GameScreen extends JPanel {
 
 
 
-
+JOptionPane.showMessageDialog(null,"You have "+Time);
         // ... (Existing code)
         for (int rows = 0; rows < numRows; rows++) {
             for (int cols = 0; cols < numCols; cols++) {
@@ -217,9 +228,15 @@ public class GameScreen extends JPanel {
             }
         }
         this.setVisible(true);
-        
+        updateScoreLabel();
         initializeTimer();
         generateMines();
+        deductionTimer = new Timer(Time, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deductPointsForUnclearedMines();
+            }
+        });
 
     }
 
@@ -288,15 +305,15 @@ public class GameScreen extends JPanel {
         switch (difficulty) {
             case 0:
                 timeLimit = 300;
-                interval=15;
+                Time=10000;
                 break;
             case 1:
                 timeLimit = 200;
-                interval=10;
+                Time=8000;
                 break;
             case 2:
                 timeLimit = 100;
-                interval=5;
+                Time=6000;
                 break;
             // Add more cases for additional difficulty levels if needed
 
@@ -309,16 +326,8 @@ public class GameScreen extends JPanel {
                         setGameOver();
                     }
                     secondsPassed+=1;
-                    elapsedTimeSeconds+=1;
                     updateTimerLabel();
-                    if(secondsPassed%interval==0){
-                        int a=secondsPassed/interval;
 
-                        if(numberOfMines+a!=MaxMine){
-                            TOTAL_POINTS=TOTAL_POINTS-5;
-                            System.out.println(TOTAL_POINTS);
-                        }
-                    }
                     if(secondsPassed>timeLimit){
 
                     setGameOver();
@@ -334,8 +343,37 @@ public class GameScreen extends JPanel {
     
     public void startTimer() {
         timer.start();
+        deductionTimer.start();
+
     }
-    
+
+    private void updateScoreLabel() {
+        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds | Score: " + BASE_SCORE);
+    }
+    private void deductPointsForMine(MineTile mine) {
+        mine.setCleared(true); // Mark the mine as cleared
+        BASE_SCORE -= DEDUCTION_AMOUNT;
+        JOptionPane.showMessageDialog(null,"Your time out let hurry up");
+        System.out.println(BASE_SCORE);
+
+        if (BASE_SCORE <= 0) {
+            gameOver = true;
+            textLabel.setText("Game Over! Your score is too low.");
+            stopTimer();
+        }
+    }
+
+    private void deductPointsForUnclearedMines() {
+        ArrayList<MineTile> unclearedMines = getUnclearedMines();
+
+        if (!unclearedMines.isEmpty()) {
+            // Randomly select one uncleared mine
+            MineTile randomMine = unclearedMines.get(random.nextInt(unclearedMines.size()));
+            deductPointsForMine(randomMine);
+        }
+    }
+
+
     private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
         textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " sceonds");
@@ -380,6 +418,8 @@ public class GameScreen extends JPanel {
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
             mineList.remove(mineList.get(i));
             currentLives--;
+            numberOfMines--;
+            TOTAL_POINTS-=5;
             if (currentLives <= 0) {
                setGameOver();
             }
@@ -389,6 +429,19 @@ public class GameScreen extends JPanel {
 
         // Check if the player has run out of lives
     }
+
+    private ArrayList<MineTile> getUnclearedMines() {
+        ArrayList<MineTile> unclearedMines = new ArrayList<>();
+
+        for (MineTile mine : mineList) {
+            if (!mine.isFlagged() && !mine.isCleared()) {
+                unclearedMines.add(mine);
+            }
+        }
+
+        return unclearedMines;
+    }
+
 public void Reveal(){
     for (int i = 0; i < mineList.size(); i++) {
         MineTile tile = mineList.get(i);
