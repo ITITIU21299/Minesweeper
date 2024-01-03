@@ -35,6 +35,7 @@ public class GameScreen extends JPanel {
         public MineTile(int rows, int cols) {
             this.rows = rows;
             this.cols = cols;
+
         }
         public boolean isFlagged() {
             return flagged;
@@ -63,7 +64,7 @@ public class GameScreen extends JPanel {
 
     static int numberOfFlags = 0;
     JLabel mineLabel = new JLabel();
-
+    private int maxFlags = 10;
 
     int tilesClicked = 0;
     boolean gameOver = false;
@@ -252,12 +253,15 @@ public class GameScreen extends JPanel {
         switch (difficulty){
             case 0:
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+                maxFlags=10;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
+                maxFlags=7;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
+                maxFlags=5;
                 break;
         }
     }
@@ -343,6 +347,7 @@ public class GameScreen extends JPanel {
         gameOver = true;
         stopTimer();
         textLabel.setText("Game Over!");
+
     }
 
     public void checkMine(int r, int c) {
@@ -427,6 +432,7 @@ public class GameScreen extends JPanel {
         if (tilesClicked == numRows * numCols - mineList.size()) {
             gameOver = true;
             textLabel.setText("Mines Cleared, You Win!");
+
         }
     }
 
@@ -441,11 +447,14 @@ public class GameScreen extends JPanel {
     }
 
     public void flagPlaced() {
-        numberOfFlags++;
-        //mineLabel.setText("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
-        playerScore += calculateScoreForMineFound();
-        mineLabel.setText("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
-        updateScoreLabel();
+        if (numberOfFlags < maxFlags) {
+            numberOfFlags++;
+            playerScore += calculateScoreForMineFound();
+            mineLabel.setText("Remaining mines: " + (numberOfMines - numberOfFlags));
+            updateScoreLabel();
+        } else {
+            JOptionPane.showMessageDialog(null, "You've reached the maximum number of flags!");
+        }
 
     }
     private int calculateScoreForMineFound() {
