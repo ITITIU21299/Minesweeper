@@ -18,12 +18,15 @@ import javax.swing.*;
 import java.text.SimpleDateFormat;
 
 
+
 /**
  *
  * @author nguye
  */
 
 public class GameScreen extends JPanel {
+    private int initialLives;
+
 
     public class MineTile extends JButton {
 
@@ -66,7 +69,7 @@ public class GameScreen extends JPanel {
 
     static int numberOfFlags = 0;
     JLabel mineLabel = new JLabel();
-    private int maxFlags = 10;
+    public static int maxFlags = 10;
     private static final int POINTS_DEDUCTION = 5;
     private   int TOTAL_POINTS = 100;
     private   int interval=0;
@@ -86,6 +89,8 @@ public class GameScreen extends JPanel {
     private static final int SCORE_FACTOR_PER_MINE = 100;
     private int elapsedTimeSeconds;
     private int MaxMine=numberOfMines;
+    private int currentLives;
+
 
 
     private JButton saveButton;
@@ -98,6 +103,7 @@ public class GameScreen extends JPanel {
         setDifficulty();
         numRows = row;
         numCols = col;
+        maxFlags=10;
         this.setSize(boardWidth, boardHeight);
         this.setLocation((int) (1217 - boardWidth) / 2, 10);
         // this.setLocationRelativeTo(null);
@@ -127,7 +133,7 @@ public class GameScreen extends JPanel {
         boardPanel.setLayout(new GridLayout(numRows, numCols));
         this.add(boardPanel);
 
-
+       currentLives=initialLives;
         pauseResumeButton = new JButton("Pause");
         pauseResumeButton.addActionListener(new ActionListener() {
             @Override
@@ -189,6 +195,7 @@ public class GameScreen extends JPanel {
                             if (tile.getIcon() == null) {
                                 if (mineList.contains(tile)) {
                                     revealMine();
+                                    System.out.println(currentLives);
                                 } else {
                                     checkMine(tile.rows, tile.cols);
                                 }
@@ -261,14 +268,17 @@ public class GameScreen extends JPanel {
             case 0:
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
                 maxFlags=10;
+                initialLives = 3;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
                 maxFlags=7;
+                initialLives = 2;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
                 maxFlags=5;
+                initialLives = 1;
                 break;
         }
     }
@@ -294,11 +304,9 @@ public class GameScreen extends JPanel {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-
-
                 if (!gamePaused) {
                     if(TOTAL_POINTS==0){
-                        revealMine();
+                        setGameOver();
                     }
                     secondsPassed+=1;
                     elapsedTimeSeconds+=1;
@@ -313,7 +321,7 @@ public class GameScreen extends JPanel {
                     }
                     if(secondsPassed>timeLimit){
 
-                    revealMine();
+                    setGameOver();
                 }
             }}
         });
@@ -361,17 +369,32 @@ public class GameScreen extends JPanel {
         }
     }
 
+    private void updateLifeLabel() {
+        mineLabel.setText("Remaining lives: " + currentLives);
+    }
+
+
     public void revealMine() {
         for (int i = 0; i < mineList.size(); i++) {
             MineTile tile = mineList.get(i);
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
+            mineList.remove(mineList.get(i));
+            currentLives--;
+            if (currentLives <= 0) {
+               setGameOver();
+            }
+            break;
         }
-        gameOver = true;
-        stopTimer();
-        textLabel.setText("Game Over!");
+        // Deduct a life based on the current number of lives
 
+        // Check if the player has run out of lives
     }
-
+public void Reveal(){
+    for (int i = 0; i < mineList.size(); i++) {
+        MineTile tile = mineList.get(i);
+        tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
+    }
+}
     public void checkMine(int r, int c) {
         if (r < 0 || r >= numRows || c < 0 || c >= numCols) {
             return;
@@ -471,20 +494,21 @@ public class GameScreen extends JPanel {
     public void flagPlaced() {
         if (numberOfFlags < maxFlags) {
             numberOfFlags++;
-            playerScore += calculateScoreForMineFound();
+
             mineLabel.setText("Remaining mines: " + (numberOfMines - numberOfFlags));
-            updateScoreLabel();
+
         } else {
             JOptionPane.showMessageDialog(null, "You've reached the maximum number of flags!");
         }
+    }
 
+    public void setGameOver(){
+        gameOver=true;
+        stopTimer();
+        textLabel.setText("Game Over!");
+        Reveal();
     }
-    private int calculateScoreForMineFound() {
-        return SCORE_FACTOR_PER_MINE;
-    }
-    private void updateScoreLabel() {
-        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds | Score: " + playerScore);
-    }
+
 
     public void flagRemoved() {
         numberOfFlags--;
@@ -501,17 +525,20 @@ public class GameScreen extends JPanel {
         private int numberOfMines;
         private int numberOfFlags;
         private int secondsPassed;
+        private   int MaxFlag;
         private MineTile[][] board;  // Added to store the state of each MineTile
         // ... (Add more fields as needed)
 
         // Constructor to initialize the game state
-        public GameState(int numRows, int numCols, int numberOfMines, int numberOfFlags, int secondsPassed, MineTile[][] board) {
+        public GameState(int numRows, int numCols, int numberOfMines, int numberOfFlags, int secondsPassed, MineTile[][] board,int MaxFlag) {
             this.numRows = numRows;
             this.numCols = numCols;
             this.numberOfMines = numberOfMines;
             this.numberOfFlags = numberOfFlags;
             this.secondsPassed = secondsPassed;
-            this.board = board;  // Store the state of each MineTile
+            this.board = board;
+            this.MaxFlag=MaxFlag;
+            // Store the state of each MineTile
             // ... (Initialize other fields as needed)
         }
         public Date getSaveDate() {
@@ -524,7 +551,7 @@ public class GameScreen extends JPanel {
     }
     public static void saveGame() {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("minesweeper.sav"))) {
-            GameState gameState = new GameState(numRows, numCols, numberOfMines, numberOfFlags, secondsPassed, board);
+            GameState gameState = new GameState(numRows, numCols, numberOfMines, numberOfFlags, secondsPassed, board,maxFlags);
             // ... (Add more fields to gameState as needed)
             outputStream.writeObject(gameState);
             gameState.setSaveDate(new Date());
@@ -546,7 +573,9 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
             numberOfMines = gameState.numberOfMines;
             numberOfFlags = gameState.numberOfFlags;
             secondsPassed = gameState.secondsPassed;
-            board = gameState.board;  // Restore the state of each MineTile
+            board = gameState.board;
+            maxFlags= gameState.MaxFlag;
+            // Restore the state of each MineTile
             // ... (Apply other fields as needed)
 
             // Update the GUI components based on the loaded game state
