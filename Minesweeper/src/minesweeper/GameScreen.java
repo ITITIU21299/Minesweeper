@@ -32,6 +32,7 @@ public class GameScreen extends JPanel {
         boolean flagCheck = false;
         boolean flagged = false;
 
+
         public MineTile(int rows, int cols) {
             this.rows = rows;
             this.cols = cols;
@@ -44,6 +45,7 @@ public class GameScreen extends JPanel {
             this.flagged = flagged;
         }
     }
+
 
     int tileSize = 40;
     static int numRows = 15;
@@ -65,7 +67,9 @@ public class GameScreen extends JPanel {
     static int numberOfFlags = 0;
     JLabel mineLabel = new JLabel();
     private int maxFlags = 10;
-
+    private static final int POINTS_DEDUCTION = 5;
+    private   int TOTAL_POINTS = 100;
+    private   int interval=0;
     int tilesClicked = 0;
     boolean gameOver = false;
     boolean gameNotBegin = true;
@@ -81,11 +85,14 @@ public class GameScreen extends JPanel {
     private int playerScore;
     private static final int SCORE_FACTOR_PER_MINE = 100;
     private int elapsedTimeSeconds;
-
+    private int MaxMine=numberOfMines;
 
 
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
+
+
+
 
         difficulty = diff;
         setDifficulty();
@@ -271,25 +278,39 @@ public class GameScreen extends JPanel {
         switch (difficulty) {
             case 0:
                 timeLimit = 300;
+                interval=15;
                 break;
             case 1:
                 timeLimit = 200;
+                interval=10;
                 break;
             case 2:
                 timeLimit = 100;
+                interval=5;
                 break;
             // Add more cases for additional difficulty levels if needed
 
         }
         timer = new Timer(1000, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
+
 
                 if (!gamePaused) {
+                    if(TOTAL_POINTS==0){
+                        revealMine();
+                    }
                     secondsPassed+=1;
                     elapsedTimeSeconds+=1;
-
                     updateTimerLabel();
+                    if(secondsPassed%interval==0){
+                        int a=secondsPassed/interval;
+
+                        if(numberOfMines+a!=MaxMine){
+                            TOTAL_POINTS=TOTAL_POINTS-5;
+                            System.out.println(TOTAL_POINTS);
+                        }
+                    }
                     if(secondsPassed>timeLimit){
 
                     revealMine();
@@ -297,7 +318,8 @@ public class GameScreen extends JPanel {
             }}
         });
     }
-    
+
+
     public void stopTimer() {
         timer.stop();
     }
