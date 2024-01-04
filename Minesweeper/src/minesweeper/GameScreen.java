@@ -68,7 +68,7 @@ public class GameScreen extends JPanel {
     JPanel textPanel;
     JPanel boardPanel;
 
-    static int numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
+    static int numberOfMines;
     static MineTile[][] board = new MineTile[numRows][numCols];
     ArrayList<MineTile> mineList;
     Random random = new Random();
@@ -304,15 +304,15 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
         secondsPassed = 0;
         switch (difficulty) {
             case 0:
-                timeLimit = 300;
+                timeLimit = 3000;
                 Time=10000;
                 break;
             case 1:
-                timeLimit = 200;
+                timeLimit = 2000;
                 Time=8000;
                 break;
             case 2:
-                timeLimit = 100;
+                timeLimit = 1000;
                 Time=6000;
                 break;
             // Add more cases for additional difficulty levels if needed
@@ -353,11 +353,11 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
     private void deductPointsForMine(MineTile mine) {
         mine.setCleared(true); // Mark the mine as cleared
         BASE_SCORE -= DEDUCTION_AMOUNT;
-        JOptionPane.showMessageDialog(null,"Your time out let hurry up");
+        //JOptionPane.showMessageDialog(null,"Your time out let hurry up");
         System.out.println(BASE_SCORE);
 
         if (BASE_SCORE <= 0) {
-            gameOver = true;
+            //gameOver = true;
             textLabel.setText("Game Over! Your score is too low.");
             stopTimer();
         }
