@@ -105,12 +105,9 @@ public class GameScreen extends JPanel {
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
 
-
-
-
-
         difficulty = diff;
         setDifficulty();
+        Bonus();
         numRows = row;
         numCols = col;
         maxFlags=10;
@@ -120,38 +117,23 @@ public class GameScreen extends JPanel {
         // this.setResizable(false);
         // this.setDefaultCloseOperation(  this.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout(0,0));
-        
         textLabel = new JLabel();
         textPanel = new JPanel();
         boardPanel = new JPanel();
-
-
         textLabel.setFont(new Font("Arial", Font.BOLD, 22));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Click a tile to start");
         textLabel.setOpaque(true);
-
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel, BorderLayout.WEST);
         this.add(textPanel, BorderLayout.NORTH);
-
-
         mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 18));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(mineLabel, BorderLayout.SOUTH);
-
         boardPanel.setLayout(new GridLayout(numRows, numCols));
         this.add(boardPanel);
-
        currentLives=initialLives;
-        pauseResumeButton = new JButton("Pause");
-        pauseResumeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                togglePauseResume();
-            }
-        });
 
         advancedHintButton = new JButton("Advanced Hint");
         advancedHintButton.addActionListener(new ActionListener() {
@@ -160,23 +142,10 @@ public class GameScreen extends JPanel {
                 provideAdvancedHint();
             }
         });
+        textPanel.add(advancedHintButton, BorderLayout.SOUTH); // Move it here
 
-
+        this.add(mineLabel, BorderLayout.SOUTH);
         // Add the Pause/Resume button to the GUI
-
-        saveButton = new JButton("Save Game");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveGame();
-            }
-        });
-        //textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-
-
-
-JOptionPane.showMessageDialog(null,"You have "+Time);
-        // ... (Existing code)
         for (int rows = 0; rows < numRows; rows++) {
             for (int cols = 0; cols < numCols; cols++) {
                 MineTile tile = new MineTile(rows, cols);
@@ -234,10 +203,53 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
         deductionTimer = new Timer(Time, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!gamePaused){
                 deductPointsForUnclearedMines();
-            }
+            }}
         });
 
+    }
+    public static int NummPause=3;
+
+
+    private int BonusTime=3;
+    public void Bonus(){
+        int a=0;
+        for(int i=0;i<BonusTime;i++) {
+             a = random.nextInt(4);
+        }
+        System.out.println(a);
+        switch (a){
+            case 1:
+                JOptionPane.showMessageDialog(null,"You won the highest bonus");
+                maxFlags++;
+                currentLives++;
+                Time+=2000;
+                timeLimit+=60;
+                NummPause++;
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null,"You won the second bonus");
+                maxFlags+=2;
+                currentLives+=2;
+                Time+=3000;
+                timeLimit+=40;
+                NummPause+=2;
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null,"You won the third bonus");
+                maxFlags+=3;
+                currentLives+=3;
+                Time+=4000;
+                timeLimit+=20;
+                NummPause+=1;
+                break;
+            case 0:
+                JOptionPane.showMessageDialog(null,"You don't have any bonus");
+                break;
+            default:
+                break;
+        }
     }
 
     private void provideAdvancedHint() {
@@ -286,38 +298,35 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
                 maxFlags=10;
                 initialLives = 3;
+                Time=10000;
+                BonusTime=3;
+                NummPause=3;
+                timeLimit=300;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
                 maxFlags=7;
                 initialLives = 2;
+                Time=8000;
+                BonusTime=2;
+                NummPause=2;
+                timeLimit=200;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
                 maxFlags=5;
                 initialLives = 1;
+                Time=6000;
+                BonusTime=1;
+                NummPause=1;
+                timeLimit=100;
                 break;
         }
     }
     
     private void initializeTimer() {
         secondsPassed = 0;
-        switch (difficulty) {
-            case 0:
-                timeLimit = 3000;
-                Time=10000;
-                break;
-            case 1:
-                timeLimit = 2000;
-                Time=8000;
-                break;
-            case 2:
-                timeLimit = 1000;
-                Time=6000;
-                break;
-            // Add more cases for additional difficulty levels if needed
 
-        }
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -339,6 +348,7 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
 
     public void stopTimer() {
         timer.stop();
+        deductionTimer.stop();
     }
     
     public void startTimer() {
@@ -348,13 +358,13 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
     }
 
     private void updateScoreLabel() {
-        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds | Score: " + BASE_SCORE);
+        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds|Score: " + BASE_SCORE+ " Flags" + maxFlags);
     }
     private void deductPointsForMine(MineTile mine) {
         mine.setCleared(true); // Mark the mine as cleared
         BASE_SCORE -= DEDUCTION_AMOUNT;
-        //JOptionPane.showMessageDialog(null,"Your time out let hurry up");
-        System.out.println(BASE_SCORE);
+        JOptionPane.showMessageDialog(null,"Your time  out let hurry up");
+        System.out.println(" Base score " + BASE_SCORE);
 
         if (BASE_SCORE <= 0) {
             //gameOver = true;
@@ -376,7 +386,7 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
 
     private void updateTimerLabel() {
         // Update a label or perform any action with the elapsed time
-        textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " sceonds");
+        textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " sceonds"+ " Base Score "+ BASE_SCORE);
     }
 
     private void togglePauseResume() {
@@ -407,9 +417,6 @@ JOptionPane.showMessageDialog(null,"You have "+Time);
         }
     }
 
-    private void updateLifeLabel() {
-        mineLabel.setText("Remaining lives: " + currentLives);
-    }
 
 
     public void revealMine() {

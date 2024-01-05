@@ -1031,8 +1031,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuBtnMouseReleased
 
     private void pauseBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBtnMouseClicked
-        gameScreen.stopTimer();        
-        
+        if(GameScreen.NummPause>0){
+        gameScreen.stopTimer();
         parent.setLocation(375, 240);
         parent.setSize(466, 366);
         parent.removeAll();
@@ -1040,8 +1040,12 @@ public class Menu extends javax.swing.JFrame {
         parent.repaint();
         parent.revalidate();
         cl.show(parent, "pausePanel");
-        GameScreen.gamePaused=true;
-
+        GameScreen.NummPause--;
+        GameScreen.gamePaused = true;
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Your pause slot is out");
+        }
     }//GEN-LAST:event_pauseBtnMouseClicked
 
     private void pauseBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBtnMouseEntered
