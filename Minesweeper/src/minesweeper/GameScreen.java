@@ -5,10 +5,7 @@
 package minesweeper;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -100,14 +97,15 @@ public class GameScreen extends JPanel {
     private static final int DEDUCTION_AMOUNT = 5; // Points deducted for each mine not cleared in time
     private Timer deductionTimer;
     int Time=10000;
-
+private boolean isGameTour;
 
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
+win=false;
 
         difficulty = diff;
         setDifficulty();
-        Bonus();
+         Bonus();
         numRows = row;
         numCols = col;
         maxFlags=10;
@@ -211,6 +209,7 @@ public class GameScreen extends JPanel {
     }
     public static int NummPause=3;
 
+    private   boolean win=true;
 
     private int BonusTime=3;
     public void Bonus(){
@@ -264,6 +263,9 @@ public class GameScreen extends JPanel {
                 }
             }
         }
+    }
+    public int getTimeLimit(){
+        return  timeLimit;
     }
     private int calculateAdvancedHint(int r, int c) {
         int advancedHint = 0;
@@ -345,7 +347,9 @@ public class GameScreen extends JPanel {
         });
     }
 
-
+public boolean isGameOver(){
+        return gameOver;
+}
     public void stopTimer() {
         timer.stop();
         deductionTimer.stop();
@@ -389,16 +393,6 @@ public class GameScreen extends JPanel {
         textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " sceonds"+ " Base Score "+ BASE_SCORE);
     }
 
-    private void togglePauseResume() {
-        gamePaused = !gamePaused;
-        if (gamePaused) {
-            timer.stop();
-            pauseResumeButton.setText("Resume");
-        } else {
-            timer.start();
-            pauseResumeButton.setText("Pause");
-        }
-    }
 
 
 
@@ -429,6 +423,7 @@ public class GameScreen extends JPanel {
             TOTAL_POINTS-=5;
             if (currentLives <= 0) {
                setGameOver();
+               win=false;
             }
             break;
         }
@@ -537,6 +532,7 @@ public void Reveal(){
         if (tilesClicked == numRows * numCols - mineList.size()) {
             gameOver = true;
             textLabel.setText("Mines Cleared, You Win!");
+            win=true;
 
         }
     }
@@ -695,6 +691,67 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
         // Initialize the timer with the loaded time limit
         initializeTimer();
     }
+
+    private static void startMinesweeperGame() {
+        // You can customize the difficulty, number of rows, and columns here
+        int difficulty = 1; // 0 for easy, 1 for medium, 2 for hard
+        int numRows = 15;
+        int numCols = 15;
+
+        JFrame frame = new JFrame("Minesweeper");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        GameScreen gameScreen = new GameScreen(difficulty, numRows, numCols);
+        frame.getContentPane().add(gameScreen);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    public void Game_tour(){
+        GameScreen gameScreen=new GameScreen(0,15,15);
+        if(gameScreen.win){
+            GameScreen gameScreen1=new GameScreen(0,13,13);
+            if(gameScreen1.win){
+                GameScreen gameScreen2=new GameScreen(0,11,11);
+                if(gameScreen2.win){
+                    GameScreen gameScreen3=new GameScreen(0,9,9);
+                    if(gameScreen3.win){
+
+                    }
+                }
+            }
+        }
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+    public boolean isWin() {
+        return win;
+    }
+    private void initializeAndShowGame(int rows, int cols) {
+        JFrame frame = new JFrame("Minesweeper Game");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(500, 500);
+
+        GameScreen gameScreen = new GameScreen(0, rows, cols);
+        frame.getContentPane().add(gameScreen);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                setWin(gameScreen.isWin());
+            }
+        });
+
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new GameScreen(0, 15, 15).Game_tour());
+    }
+
 }
 
 
