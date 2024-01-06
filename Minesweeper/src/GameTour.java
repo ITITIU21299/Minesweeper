@@ -8,6 +8,11 @@ public class GameTour  extends JFrame{
     boolean gameEnded = false;
 
     public static void main(String[] args) {
+        GameTour gameTour=new GameTour();
+        gameTour.TourGame();
+
+    }
+    public void TourGame(){
         int initialRow = 15;
         int initialCol = 15;
         int diff = 0;
@@ -60,15 +65,15 @@ public class GameTour  extends JFrame{
                         secondsPassed++;
                         System.out.println("Seconds passed: " + secondsPassed);
                         if(gameScreen.isGameOver()==false){
-                        if (secondsPassed == gameScreen.getTimeLimit() + 1) {
-                            System.out.println("Seconds win: " + secondsPassed);
-                            if (gameScreen.isWin()) {
-                                gameEnded[0] = false;
-                            } else {
-                                gameEnded[0] = true;
+                            if (secondsPassed == gameScreen.getTimeLimit() + 1) {
+                                System.out.println("Seconds win: " + secondsPassed);
+                                if (gameScreen.isWin()) {
+                                    gameEnded[0] = false;
+                                } else {
+                                    gameEnded[0] = true;
+                                }
                             }
-                        }
-                    }else{
+                        }else{
                             if (gameScreen.isWin()) {
                                 gameEnded[0] = false;
                             } else {
@@ -106,7 +111,6 @@ public class GameTour  extends JFrame{
                 timer.stop();
             }
         }
-
 
     }
 }
