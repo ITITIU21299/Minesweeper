@@ -16,10 +16,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.sound.sampled.Clip;
+import minesweeper.Minesweeper;
+
 
 /**
  *
@@ -111,9 +115,7 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Minesweeper");
-        setMaximumSize(new java.awt.Dimension(1217, 684));
         setMinimumSize(new java.awt.Dimension(1217, 684));
-        setPreferredSize(new java.awt.Dimension(1217, 684));
         setResizable(false);
         setSize(new java.awt.Dimension(1217, 684));
         getContentPane().setLayout(null);
@@ -960,7 +962,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnSettingsMouseReleased
 
     private void onBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMouseClicked
-         
+         Minesweeper.PlayMusic();
     }//GEN-LAST:event_onBtnSettingsMouseClicked
 
     private void onBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMouseEntered
@@ -980,7 +982,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_onBtnSettingsMouseReleased
 
     private void offBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMouseClicked
-        // TODO add your handling code here:
+       Minesweeper.StopMusic();
     }//GEN-LAST:event_offBtnSettingsMouseClicked
 
     private void offBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMouseEntered
@@ -1066,7 +1068,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_pauseBtnMouseReleased
 
     private void onBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseClicked
-        // TODO add your handling code here:
+        Minesweeper.PlayMusic();
     }//GEN-LAST:event_onBtnPauseMouseClicked
 
     private void onBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseEntered
@@ -1086,7 +1088,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_onBtnPauseMouseReleased
 
     private void offBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseClicked
-        // TODO add your handling code here:
+        Minesweeper.StopMusic();
     }//GEN-LAST:event_offBtnPauseMouseClicked
 
     private void offBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseEntered

@@ -14,23 +14,25 @@ import javax.sound.sampled.Clip;
  * @author nguye
  */
 public class Minesweeper {
-
+    
+    private static Clip clip;
+    
     public static void main(String[] args) {
         // TODO code application logic here
         Menu menu = new Menu();
         menu.setVisible(true);
         
-        String filepath = "src\\sound\\Schubert - Serenade.wav";
-        PlayMusic(filepath);
         
+        PlayMusic();
     }
     
-    public static void PlayMusic(String location){
+    public static void PlayMusic(){
         try {
-            File musicPath = new File(location);
+            String filepath = "src\\sound\\Schubert - Serenade.wav";
+            File musicPath = new File(filepath);
             if (musicPath.exists()){
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                Clip clip = AudioSystem.getClip();
+                clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 clip.start();
             }
@@ -41,4 +43,11 @@ public class Minesweeper {
             System.out.println(e);
         }
     }
+    
+    public static void StopMusic(){
+         if (clip != null && clip.isRunning()) {
+            clip.stop();
+        }
+    }
 }
+    
