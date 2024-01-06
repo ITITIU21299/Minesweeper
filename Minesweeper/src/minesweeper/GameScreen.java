@@ -54,8 +54,8 @@ public class GameScreen extends JPanel {
 
 
     int tileSize = 40;
-    static int numRows = 15;
-    static int numCols = 15;
+    int numRows = 15;
+    int numCols = 15;
     int boardWidth = numCols * tileSize;
     int boardHeight = numRows * tileSize;
 
@@ -65,14 +65,14 @@ public class GameScreen extends JPanel {
     JPanel textPanel;
     JPanel boardPanel;
 
-    static int numberOfMines;
-    static MineTile[][] board = new MineTile[numRows][numCols];
+    int numberOfMines;
+    MineTile[][] board = new MineTile[numRows][numCols];
     ArrayList<MineTile> mineList;
     Random random = new Random();
 
-    static int numberOfFlags = 0;
+    int numberOfFlags = 0;
     JLabel mineLabel = new JLabel();
-    public static int maxFlags = 10;
+    //public static int maxFlags = 10;
     private static final int POINTS_DEDUCTION = 5;
     private   int TOTAL_POINTS = 100;
     private   int interval=0;
@@ -97,18 +97,18 @@ public class GameScreen extends JPanel {
     private static final int DEDUCTION_AMOUNT = 5; // Points deducted for each mine not cleared in time
     private Timer deductionTimer;
     int Time=10000;
-private boolean isGameTour;
+    private boolean isGameTour;
 
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
-win=false;
-
-        difficulty = diff;
-        setDifficulty();
-         Bonus();
+        
+        win=false;
         numRows = row;
         numCols = col;
-        maxFlags=10;
+        difficulty = diff;
+        setDifficulty();
+        Bonus();
+        //maxFlags=10;
         this.setSize(boardWidth, boardHeight);
         this.setLocation((int) (1217 - boardWidth) / 2, 10);
         // this.setLocationRelativeTo(null);
@@ -221,7 +221,7 @@ win=false;
         switch (a){
             case 1:
                 JOptionPane.showMessageDialog(null,"You won the highest bonus");
-                maxFlags++;
+                //maxFlags++;
                 currentLives++;
                 Time+=2000;
                 timeLimit+=60;
@@ -229,7 +229,7 @@ win=false;
                 break;
             case 2:
                 JOptionPane.showMessageDialog(null,"You won the second bonus");
-                maxFlags+=2;
+                //maxFlags+=2;
                 currentLives+=2;
                 Time+=3000;
                 timeLimit+=40;
@@ -237,7 +237,7 @@ win=false;
                 break;
             case 3:
                 JOptionPane.showMessageDialog(null,"You won the third bonus");
-                maxFlags+=3;
+                //maxFlags+=3;
                 currentLives+=3;
                 Time+=4000;
                 timeLimit+=20;
@@ -298,7 +298,7 @@ win=false;
         switch (difficulty){
             case 0:
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-                maxFlags=10;
+                //maxFlags=10;
                 initialLives = 3;
                 Time=10000;
                 BonusTime=3;
@@ -307,7 +307,7 @@ win=false;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
-                maxFlags=7;
+                //maxFlags=7;
                 initialLives = 2;
                 Time=8000;
                 BonusTime=2;
@@ -316,7 +316,7 @@ win=false;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
-                maxFlags=5;
+                //maxFlags=5;
                 initialLives = 1;
                 Time=6000;
                 BonusTime=1;
@@ -362,7 +362,7 @@ public boolean isGameOver(){
     }
 
     private void updateScoreLabel() {
-        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds|Score: " + BASE_SCORE+ " Flags" + maxFlags);
+        textLabel.setText("Time: " + elapsedTimeSeconds + " seconds|Score: " + BASE_SCORE);
     }
     private void deductPointsForMine(MineTile mine) {
         mine.setCleared(true); // Mark the mine as cleared
@@ -548,14 +548,8 @@ public void Reveal(){
     }
 
     public void flagPlaced() {
-        if (numberOfFlags < maxFlags) {
             numberOfFlags++;
-
             mineLabel.setText("Remaining mines: " + (numberOfMines - numberOfFlags));
-
-        } else {
-            JOptionPane.showMessageDialog(null, "You've reached the maximum number of flags!");
-        }
     }
 
     public void setGameOver(){
@@ -605,7 +599,7 @@ public void Reveal(){
             this.saveDate = saveDate;
         }
     }
-    public static void saveGame() {
+    /*public static void saveGame() {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("minesweeper.sav"))) {
             GameState gameState = new GameState(numRows, numCols, numberOfMines, numberOfFlags, secondsPassed, board,maxFlags);
             // ... (Add more fields to gameState as needed)
@@ -615,10 +609,10 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // Add a new method to load the game state from a file
-    private void loadGame() {
+    /*private void loadGame() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("minesweeper.sav"))) {
             GameState gameState = (GameState) inputStream.readObject();
             // ... (Retrieve fields from gameState as needed)
@@ -690,7 +684,7 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
 
         // Initialize the timer with the loaded time limit
         initializeTimer();
-    }
+    }*/
 
     private static void startMinesweeperGame() {
         // You can customize the difficulty, number of rows, and columns here

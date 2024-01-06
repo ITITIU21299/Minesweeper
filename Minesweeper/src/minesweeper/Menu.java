@@ -1168,7 +1168,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
         JOptionPane.showMessageDialog(null, "Saved", "Notification",JOptionPane.INFORMATION_MESSAGE);
-        GameScreen.saveGame();
+        //GameScreen.saveGame();
     }//GEN-LAST:event_saveBtnMouseClicked
 
     private void saveBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseEntered
