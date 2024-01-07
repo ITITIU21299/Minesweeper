@@ -141,7 +141,14 @@ public class GameScreen extends JPanel {
             }
         });
         textPanel.add(advancedHintButton, BorderLayout.SOUTH); // Move it here
-
+        JButton undoButton = new JButton("Undo");
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                undo();
+            }
+        });
+        textPanel.add(undoButton, BorderLayout.SOUTH);
         this.add(mineLabel, BorderLayout.SOUTH);
         // Add the Pause/Resume button to the GUI
         for (int rows = 0; rows < numRows; rows++) {
@@ -156,8 +163,10 @@ public class GameScreen extends JPanel {
                     @Override
                     public void mousePressed(MouseEvent e) {
                         if (gameNotBegin) {
+
                             gameNotBegin = false;
                             textPanel.add(advancedHintButton, BorderLayout.EAST);
+                            initializeTimer();
                             startTimer();
                         }                        
                         if (gameOver) {
@@ -196,7 +205,6 @@ public class GameScreen extends JPanel {
         }
         this.setVisible(true);
         updateScoreLabel();
-        initializeTimer();
         generateMines();
         deductionTimer = new Timer(Time, new ActionListener() {
             @Override
@@ -210,7 +218,36 @@ public class GameScreen extends JPanel {
     public static int NummPause=3;
 
     private   boolean win=true;
-
+ private int undoTime;
+    public void undo(){
+        if(!gameOver&&undoTime>0){
+            boolean D=false;
+            if(currentLives<initialLives) {
+                currentLives++;
+                D=true;
+            }
+            if(BASE_SCORE<100){
+                BASE_SCORE+=5;
+                D=true;
+            }
+            if(NummPause<Initial_Pause){
+                NummPause++;
+                D=true;
+            }
+            if(secondsPassed>0){
+                secondsPassed=0;
+                D=true;
+            }
+            if(D){
+                undoTime--;
+            }
+            deductionTimer.stop();
+            D=true;
+            deductionTimer.start();
+        }else{
+            JOptionPane.showMessageDialog(null,"You can not undo");
+        }
+    }
     private int BonusTime=3;
     public void Bonus(){
         int a=0;
@@ -293,7 +330,7 @@ public class GameScreen extends JPanel {
 
         return advancedHint;
     }
-    
+    private int Initial_Pause;
     private void setDifficulty(){
         switch (difficulty){
             case 0:
@@ -304,6 +341,8 @@ public class GameScreen extends JPanel {
                 BonusTime=3;
                 NummPause=3;
                 timeLimit=300;
+                undoTime=3;
+                Initial_Pause=3;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
@@ -313,6 +352,8 @@ public class GameScreen extends JPanel {
                 BonusTime=2;
                 NummPause=2;
                 timeLimit=200;
+                undoTime=2;
+                Initial_Pause=2;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
@@ -322,6 +363,8 @@ public class GameScreen extends JPanel {
                 BonusTime=1;
                 NummPause=1;
                 timeLimit=100;
+                undoTime=1;
+                Initial_Pause=1;
                 break;
         }
     }
@@ -686,65 +729,15 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
         initializeTimer();
     }*/
 
-    private static void startMinesweeperGame() {
-        // You can customize the difficulty, number of rows, and columns here
-        int difficulty = 1; // 0 for easy, 1 for medium, 2 for hard
-        int numRows = 15;
-        int numCols = 15;
 
-        JFrame frame = new JFrame("Minesweeper");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GameScreen gameScreen = new GameScreen(difficulty, numRows, numCols);
-        frame.getContentPane().add(gameScreen);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
 
-    public void Game_tour(){
-        GameScreen gameScreen=new GameScreen(0,15,15);
-        if(gameScreen.win){
-            GameScreen gameScreen1=new GameScreen(0,13,13);
-            if(gameScreen1.win){
-                GameScreen gameScreen2=new GameScreen(0,11,11);
-                if(gameScreen2.win){
-                    GameScreen gameScreen3=new GameScreen(0,9,9);
-                    if(gameScreen3.win){
-
-                    }
-                }
-            }
-        }
-    }
-
-    public void setWin(boolean win) {
-        this.win = win;
-    }
     public boolean isWin() {
         return win;
     }
-    private void initializeAndShowGame(int rows, int cols) {
-        JFrame frame = new JFrame("Minesweeper Game");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 500);
 
-        GameScreen gameScreen = new GameScreen(0, rows, cols);
-        frame.getContentPane().add(gameScreen);
 
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                setWin(gameScreen.isWin());
-            }
-        });
 
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GameScreen(0, 15, 15).Game_tour());
-    }
 
 }
 

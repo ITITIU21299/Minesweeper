@@ -1,10 +1,10 @@
-import minesweeper.GameScreen;
+package minesweeper;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameTour  extends JFrame{
+public class GameTour extends JFrame{
     boolean gameEnded = false;
 
     public static void main(String[] args) {
