@@ -183,8 +183,10 @@ public class GameScreen extends JPanel {
     }
     
     private void undo(){
+        if (undoTimes>0){
         if (!actionStack.isEmpty()){
             Action lastAction = actionStack.pop();
+            undoTimes--;
             if  (lastAction.isCheckMine){
                 lastAction.tile.setEnabled(true);
                 lastAction.tile.setIcon(null);
@@ -197,6 +199,9 @@ public class GameScreen extends JPanel {
                 gameOver = false;
                 startTimer();
             }
+        }
+    } else{
+            JOptionPane.showMessageDialog(this,"No more undos!");
         }
     }
     
@@ -214,7 +219,7 @@ public class GameScreen extends JPanel {
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
                 initialLives = 3;
                 timeLimit=500;
-                undoTimes=3;
+                undoTimes=1;
                 Initial_Pause=3;
                 break;
             case 1:
@@ -228,7 +233,7 @@ public class GameScreen extends JPanel {
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
                 initialLives = 1;
                 timeLimit=300;
-                undoTimes=1;
+                undoTimes=3;
                 Initial_Pause=1;
                 break;
         }
