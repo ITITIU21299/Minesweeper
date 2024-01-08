@@ -183,21 +183,21 @@ public class GameScreen extends JPanel {
             case 0:
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
                 initialLives = 3;
-                timeLimit=300;
+                timeLimit=500;
                 undoTimes=3;
                 Initial_Pause=3;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
                 initialLives = 2;
-                timeLimit=200;
+                timeLimit=400;
                 undoTimes=2;
                 Initial_Pause=2;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
                 initialLives = 1;
-                timeLimit=100;
+                timeLimit=300;
                 undoTimes=1;
                 Initial_Pause=1;
                 break;
@@ -213,10 +213,8 @@ public class GameScreen extends JPanel {
                 if (!gamePaused) {
                     secondsPassed+=1;
                     updateTimerLabel();
-
                     if(secondsPassed>timeLimit){
-
-                    setGameOver();
+                        revealMine();
                 }
             }}
         });
@@ -258,12 +256,11 @@ public boolean isGameOver(){
         for (int i = 0; i < mineList.size(); i++) {
             MineTile tile = mineList.get(i);
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
-            mineList.remove(mineList.get(i));
-            numberOfMines--;
-               setGameOver();
-               win=false;
-            break;
         }
+         gameOver=true;
+            stopTimer();
+            textLabel.setText("Game Over!");
+            win=false;
     }
 
     public void checkMine(int r, int c) {
@@ -368,14 +365,6 @@ public boolean isGameOver(){
             numberOfFlags++;
             mineLabel.setText("Remaining mines: " + (numberOfMines - numberOfFlags));
     }
-
-    public void setGameOver(){
-        gameOver=true;
-        stopTimer();
-        textLabel.setText("Game Over!");
-        revealMine();
-    }
-
 
     public void flagRemoved() {
         numberOfFlags--;
