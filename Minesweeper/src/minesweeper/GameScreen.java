@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Random;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
+import java.util.Stack;
 
 
 
@@ -24,7 +25,18 @@ import java.text.SimpleDateFormat;
 public class GameScreen extends JPanel {
     private int initialLives;
     int undoTimes;
-
+    private Stack<Action> actionStack = new Stack<>();
+    
+    public class Action{
+        MineTile tile;
+        boolean isCheckMine;
+        
+        public Action(MineTile tile, boolean isCheckmine){
+            this.tile = tile;
+            this.isCheckMine = isCheckmine;
+        }
+    }
+    
     public class MineTile extends JButton {
 
         int rows;
@@ -112,7 +124,7 @@ public class GameScreen extends JPanel {
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                undo();
             }
         });
         textPanel.add(undoButton, BorderLayout.SOUTH);
@@ -169,8 +181,26 @@ public class GameScreen extends JPanel {
         generateMines();
 
     }
-
-    private   boolean win=true;
+    
+    private void undo(){
+        if (!actionStack.isEmpty()){
+            Action lastAction = actionStack.pop();
+            if  (lastAction.isCheckMine){
+                lastAction.tile.setEnabled(true);
+                lastAction.tile.setIcon(null);
+                tilesClicked--;
+            }
+            else{
+                for (MineTile mineTile : mineList){
+                    mineTile.setIcon(null);
+                }
+                gameOver = false;
+                startTimer();
+            }
+        }
+    }
+    
+    private boolean win=true;
 
     public int getTimeLimit(){
         return  timeLimit;
@@ -258,9 +288,10 @@ public boolean isGameOver(){
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
         }
          gameOver=true;
-            stopTimer();
-            textLabel.setText("Game Over!");
-            win=false;
+         stopTimer();
+         textLabel.setText("Game Over!");
+         win=false;
+         actionStack.push(new Action(null, false));
     }
 
     public void checkMine(int r, int c) {
@@ -292,46 +323,54 @@ public boolean isGameOver(){
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 2:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 3:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 4:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 5:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 6:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 7:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
                 case 8:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     tile.setText("");
+                    actionStack.push(new Action(tile, true));
                     break;
             }
         } else {
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/10.png")));
-
+            actionStack.push(new Action(tile, true));
             checkMine(r - 1, c - 1);
             checkMine(r - 1, c);
             checkMine(r - 1, c + 1);
@@ -362,8 +401,8 @@ public boolean isGameOver(){
     }
 
     public void flagPlaced() {
-            numberOfFlags++;
-            mineLabel.setText("Remaining mines: " + (numberOfMines - numberOfFlags));
+         numberOfFlags++;
+         mineLabel.setText("Remaining mines: " + (numberOfMines - numberOfFlags));
     }
 
     public void flagRemoved() {
