@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package minesweeper;
 
 import java.awt.*;
@@ -14,13 +10,6 @@ import java.util.Random;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Stack;
-
-
-
-/**
- *
- * @author nguye
- */
 
 public class GameScreen extends JPanel {
     private int initialLives;
@@ -106,7 +95,7 @@ public class GameScreen extends JPanel {
         textLabel = new JLabel();
         textPanel = new JPanel();
         boardPanel = new JPanel();
-        textLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        textLabel.setFont(new Font("Arial", Font.BOLD, 17));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Click a tile to start");
         textLabel.setOpaque(true);
@@ -136,10 +125,11 @@ public class GameScreen extends JPanel {
 
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0, 0, 0, 0));
-                tile.setFont(new Font("Arial Unicode MS", Font.PLAIN, 45));
+//                tile.setFont(new Font("Arial Unicode MS", Font.PLAIN, 45));
                 tile.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
+                        
                         if (gameNotBegin) {
                             gameNotBegin = false;
                             initializeTimer();
@@ -149,12 +139,13 @@ public class GameScreen extends JPanel {
                             return;
                         }
                         MineTile tile = (MineTile) e.getSource();
-
+                        //System.out.println(tile.getIcon().toString().contains("/img/0.png"));
                         if (e.getButton() == MouseEvent.BUTTON1) {
                             if(tile.flagCheck){
                                 return;
                             }
-                            if (tile.getIcon() == null) {
+                            if (tile.getIcon().toString().contains("/img/0.png")) {
+                                System.out.println(".mousePressed()");
                                 if (mineList.contains(tile)) {
                                     revealMine();
                                 } else {
@@ -162,13 +153,15 @@ public class GameScreen extends JPanel {
                                 }
                             }
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
-                            if (tile.getIcon() == null && tile.isEnabled()) {
+                            if (tile.getIcon().toString().contains("/img/0.png") && tile.isEnabled()) {
                                 tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/11.png")));
                                 tile.flagCheck = true;
+                                tile.flagged =true;
                                 flagPlaced();
                             } else if (tile.flagCheck){
                                 tile.setIcon(null);
                                 tile.flagCheck = false;
+                                tile.flagged = false;
                                 flagRemoved();
                             }
                         }
@@ -179,6 +172,13 @@ public class GameScreen extends JPanel {
         }
         this.setVisible(true);
         generateMines();
+        for (int rows = 0; rows < numRows; rows++){
+            for (int cols = 0; cols < numCols; cols++){
+                MineTile tile = board[rows][cols];
+                tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
+                tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
+            }
+        }
 
     }
     
@@ -187,14 +187,17 @@ public class GameScreen extends JPanel {
         if (!actionStack.isEmpty()){
             Action lastAction = actionStack.pop();
             undoTimes--;
+            updateLabel();
             if  (lastAction.isCheckMine){
                 lastAction.tile.setEnabled(true);
-                lastAction.tile.setIcon(null);
+                lastAction.tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
                 tilesClicked--;
             }
             else{
                 for (MineTile mineTile : mineList){
-                    mineTile.setIcon(null);
+                    if (!mineTile.isFlagged()){
+                        mineTile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
+                    }
                 }
                 gameOver = false;
                 startTimer();
@@ -247,7 +250,7 @@ public class GameScreen extends JPanel {
             public void actionPerformed(ActionEvent e){
                 if (!gamePaused) {
                     secondsPassed+=1;
-                    updateTimerLabel();
+                    updateLabel();
                     if(secondsPassed>timeLimit){
                         revealMine();
                 }
@@ -266,8 +269,8 @@ public boolean isGameOver(){
         timer.start();
     }
 
-    private void updateTimerLabel() {
-        textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " seconds");
+    private void updateLabel() {
+        textLabel.setText("Time: " + secondsPassed + " / " + timeLimit + " seconds || Undo left: "+undoTimes);
     }
 
     public void generateMines() {
@@ -288,9 +291,13 @@ public boolean isGameOver(){
 
 
     public void revealMine() {
-        for (int i = 0; i < mineList.size(); i++) {
-            MineTile tile = mineList.get(i);
-            tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
+        if (undoTimes == 0){
+            for (int i = 0; i < mineList.size(); i++) {
+                MineTile tile = mineList.get(i);
+                tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "You have the undo action left. Make use of it!");
         }
          gameOver=true;
          stopTimer();
@@ -375,6 +382,7 @@ public boolean isGameOver(){
             }
         } else {
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/10.png")));
+            tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/10.png")));
             actionStack.push(new Action(tile, true));
             checkMine(r - 1, c - 1);
             checkMine(r - 1, c);
@@ -419,11 +427,3 @@ public boolean isGameOver(){
         return win;
     }
 }
-
-
-
-
-
-
-
-
