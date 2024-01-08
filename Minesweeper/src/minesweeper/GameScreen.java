@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 
 public class GameScreen extends JPanel {
     private int initialLives;
-
+    int undoTimes;
 
     public class MineTile extends JButton {
 
@@ -52,7 +52,7 @@ public class GameScreen extends JPanel {
         }
     }
 
-
+    
     int tileSize = 40;
     int numRows = 15;
     int numCols = 15;
@@ -91,7 +91,7 @@ public class GameScreen extends JPanel {
 
     private int elapsedTimeSeconds;
 //    private int MaxMine=numberOfMines;
-    private int currentLives;
+//    private int currentLives;
 
 //    private static int BASE_SCORE = 100; // Adjust the base score as needed
 //    private static final int DEDUCTION_AMOUNT = 5; // Points deducted for each mine not cleared in time
@@ -131,7 +131,7 @@ public class GameScreen extends JPanel {
         this.add(mineLabel, BorderLayout.SOUTH);
         boardPanel.setLayout(new GridLayout(numRows, numCols));
         this.add(boardPanel);
-       currentLives=initialLives;
+//       currentLives=initialLives;
 
 //        advancedHintButton = new JButton("Advanced Hint");
 //        advancedHintButton.addActionListener(new ActionListener() {
@@ -145,7 +145,7 @@ public class GameScreen extends JPanel {
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                undo();
+//                undo();
             }
         });
         textPanel.add(undoButton, BorderLayout.SOUTH);
@@ -163,14 +163,11 @@ public class GameScreen extends JPanel {
                     @Override
                     public void mousePressed(MouseEvent e) {
                         if (gameNotBegin) {
-
                             gameNotBegin = false;
-//                            textPanel.add(advancedHintButton, BorderLayout.EAST);
                             initializeTimer();
                             startTimer();
                         }                        
-                        if (gameOver) {
-                            stopTimer();
+                        if (gameOver){
                             return;
                         }
                         MineTile tile = (MineTile) e.getSource();
@@ -182,7 +179,6 @@ public class GameScreen extends JPanel {
                             if (tile.getIcon() == null) {
                                 if (mineList.contains(tile)) {
                                     revealMine();
-                                    System.out.println(currentLives);
                                 } else {
                                     checkMine(tile.rows, tile.cols);
                                 }
@@ -215,39 +211,39 @@ public class GameScreen extends JPanel {
 //        });
 
     }
-    public static int NummPause=3;
-
+//    public static int NummPause=3;
+//
     private   boolean win=true;
-    private int undoTime;
-    public void undo(){
-        if(!gameOver&&undoTime>0){
-            boolean D=false;
-            if(currentLives<initialLives) {
-                currentLives++;
-                D=true;
-            }
-//            if(BASE_SCORE<100){
-//                BASE_SCORE+=5;
+//    private int undoTime;
+//    public void undo(){
+//        if(!gameOver&&undoTime>0){
+//            boolean D=false;
+//            if(currentLives<initialLives) {
+//                currentLives++;
 //                D=true;
 //            }
-            if(NummPause<Initial_Pause){
-                NummPause++;
-                D=true;
-            }
-            if(secondsPassed>0){
-                secondsPassed=0;
-                D=true;
-            }
-            if(D){
-                undoTime--;
-            }
-//            deductionTimer.stop();
-            D=true;
-//            deductionTimer.start();
-        }else{
-            JOptionPane.showMessageDialog(null,"You can not undo");
-        }
-    }
+////            if(BASE_SCORE<100){
+////                BASE_SCORE+=5;
+////                D=true;
+////            }
+//            if(NummPause<Initial_Pause){
+//                NummPause++;
+//                D=true;
+//            }
+//            if(secondsPassed>0){
+//                secondsPassed=0;
+//                D=true;
+//            }
+//            if(D){
+//                undoTime--;
+//            }
+////            deductionTimer.stop();
+//            D=true;
+////            deductionTimer.start();
+//        }else{
+//            JOptionPane.showMessageDialog(null,"You can not undo");
+//        }
+//    }
 //    private int BonusTime=3;
 //    public void Bonus(){
 //        int a=0;
@@ -304,32 +300,32 @@ public class GameScreen extends JPanel {
     public int getTimeLimit(){
         return  timeLimit;
     }
-    private int calculateAdvancedHint(int r, int c) {
-        int advancedHint = 0;
-
-        // Add your advanced hint calculation logic here
-        // Example: Check for patterns or advanced strategies
-        // This is just a placeholder example, replace with actual logic
-
-        int minesFound = 0;
-
-        minesFound += countMine(r - 1, c - 1);
-        minesFound += countMine(r - 1, c);
-        minesFound += countMine(r - 1, c + 1);
-        minesFound += countMine(r, c - 1);
-        minesFound += countMine(r, c + 1);
-        minesFound += countMine(r + 1, c - 1);
-        minesFound += countMine(r + 1, c);
-        minesFound += countMine(r + 1, c + 1);
-
-        if ((r == 0 && (c == 0 || c == numCols - 1)) || (r == numRows - 1 && (c == 0 || c == numCols - 1))) {
-            advancedHint = minesFound / 2; // For corners, consider half the mines
-        } else {
-            advancedHint = minesFound;
-        }
-
-        return advancedHint;
-    }
+//    private int calculateAdvancedHint(int r, int c) {
+//        int advancedHint = 0;
+//
+//        // Add your advanced hint calculation logic here
+//        // Example: Check for patterns or advanced strategies
+//        // This is just a placeholder example, replace with actual logic
+//
+//        int minesFound = 0;
+//
+//        minesFound += countMine(r - 1, c - 1);
+//        minesFound += countMine(r - 1, c);
+//        minesFound += countMine(r - 1, c + 1);
+//        minesFound += countMine(r, c - 1);
+//        minesFound += countMine(r, c + 1);
+//        minesFound += countMine(r + 1, c - 1);
+//        minesFound += countMine(r + 1, c);
+//        minesFound += countMine(r + 1, c + 1);
+//
+//        if ((r == 0 && (c == 0 || c == numCols - 1)) || (r == numRows - 1 && (c == 0 || c == numCols - 1))) {
+//            advancedHint = minesFound / 2; // For corners, consider half the mines
+//        } else {
+//            advancedHint = minesFound;
+//        }
+//
+//        return advancedHint;
+//    }
     private int Initial_Pause;
     private void setDifficulty(){
         switch (difficulty){
@@ -339,9 +335,9 @@ public class GameScreen extends JPanel {
                 initialLives = 3;
 //                Time=10000;
 //                BonusTime=3;
-                NummPause=3;
+//                NummPause=3;
                 timeLimit=300;
-                undoTime=3;
+                undoTimes=3;
                 Initial_Pause=3;
                 break;
             case 1:
@@ -350,9 +346,9 @@ public class GameScreen extends JPanel {
                 initialLives = 2;
 //                Time=8000;
 //                BonusTime=2;
-                NummPause=2;
+//                NummPause=2;
                 timeLimit=200;
-                undoTime=2;
+                undoTimes=2;
                 Initial_Pause=2;
                 break;
             case 2:
@@ -361,9 +357,9 @@ public class GameScreen extends JPanel {
                 initialLives = 1;
 //                Time=6000;
 //                BonusTime=1;
-                NummPause=1;
+//                NummPause=1;
                 timeLimit=100;
-                undoTime=1;
+                undoTimes=1;
                 Initial_Pause=1;
                 break;
         }
@@ -460,13 +456,13 @@ public boolean isGameOver(){
             MineTile tile = mineList.get(i);
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/9.png")));
             mineList.remove(mineList.get(i));
-            currentLives--;
+//            currentLives--;
             numberOfMines--;
 //            TOTAL_POINTS-=5;
-            if (currentLives <= 0) {
+//            if (currentLives <= 0) {
                setGameOver();
                win=false;
-            }
+//            }
             break;
         }
     }
@@ -571,6 +567,7 @@ public boolean isGameOver(){
 
         if (tilesClicked == numRows * numCols - mineList.size()) {
             gameOver = true;
+            stopTimer();
             textLabel.setText("Mines Cleared, You Win!");
             win=true;
 
@@ -734,10 +731,6 @@ JOptionPane.showMessageDialog(null,"Save game successfully");
     public boolean isWin() {
         return win;
     }
-
-
-
-
 }
 
 
