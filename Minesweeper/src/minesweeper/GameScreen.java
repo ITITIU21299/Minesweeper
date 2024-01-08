@@ -15,14 +15,17 @@ public class GameScreen extends JPanel {
     private int initialLives;
     int undoTimes;
     private Stack<Action> actionStack = new Stack<>();
+    int stackIndex = 0;
     
     public class Action{
         MineTile tile;
         boolean isCheckMine;
+        int index;
         
-        public Action(MineTile tile, boolean isCheckmine){
+        public Action(MineTile tile, boolean isCheckmine, int index){
             this.tile = tile;
             this.isCheckMine = isCheckmine;
+            this.index = index;
         }
     }
     
@@ -149,7 +152,7 @@ public class GameScreen extends JPanel {
                                 if (mineList.contains(tile)) {
                                     revealMine();
                                 } else {
-                                    checkMine(tile.rows, tile.cols);
+                                    checkMine(tile.rows, tile.cols, false);
                                 }
                             }
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
@@ -189,6 +192,11 @@ public class GameScreen extends JPanel {
             undoTimes--;
             updateLabel();
             if  (lastAction.isCheckMine){
+                while (!actionStack.isEmpty() && actionStack.peek().index == lastAction.index){
+                lastAction.tile.setEnabled(true);
+                lastAction.tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
+                lastAction = actionStack.pop();
+                }
                 lastAction.tile.setEnabled(true);
                 lastAction.tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
                 tilesClicked--;
@@ -303,10 +311,14 @@ public boolean isGameOver(){
          stopTimer();
          textLabel.setText("Game Over!");
          win=false;
-         actionStack.push(new Action(null, false));
+         actionStack.push(new Action(null, false, -1));
     }
 
-    public void checkMine(int r, int c) {
+    public void checkMine(int r, int c, boolean multiple) {
+        if (!multiple){
+            stackIndex++;
+        }
+        
         if (r < 0 || r >= numRows || c < 0 || c >= numCols) {
             return;
         }
@@ -335,63 +347,99 @@ public boolean isGameOver(){
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 2:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 3:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 4:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 5:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/5.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 6:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/6.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 7:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/7.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
                 case 8:
                     tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/8.png")));
                     tile.setText("");
-                    actionStack.push(new Action(tile, true));
+                    actionStack.push(new Action(tile, true, stackIndex));
+                    if (!multiple){
+                        stackIndex++;
+                    }
                     break;
             }
         } else {
             tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/10.png")));
             tile.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/img/10.png")));
-            actionStack.push(new Action(tile, true));
-            checkMine(r - 1, c - 1);
-            checkMine(r - 1, c);
-            checkMine(r - 1, c + 1);
-            checkMine(r, c - 1);
-            checkMine(r, c + 1);
-            checkMine(r + 1, c - 1);
-            checkMine(r + 1, c);
-            checkMine(r + 1, c + 1);
+            if (!multiple) {
+            actionStack.push(new Action(tile, true, stackIndex));
+            checkMine(r - 1, c - 1,true);
+            checkMine(r - 1, c, true);
+            checkMine(r - 1, c + 1, true);
+            checkMine(r, c - 1, true);
+            checkMine(r, c + 1, true);
+            checkMine(r + 1, c - 1, true);
+            checkMine(r + 1, c, true);
+            checkMine(r + 1, c + 1, true);
+            } else{
+                actionStack.push(new Action(tile, true, stackIndex));
+                checkMine(r - 1, c - 1,true);
+                checkMine(r - 1, c, true);
+                checkMine(r - 1, c + 1, true);
+                checkMine(r, c - 1, true);
+                checkMine(r, c + 1, true);
+                checkMine(r + 1, c - 1, true);
+                checkMine(r + 1, c, true);
+                checkMine(r + 1, c + 1, true);
+            }
         }
 
         if (tilesClicked == numRows * numCols - mineList.size()) {
