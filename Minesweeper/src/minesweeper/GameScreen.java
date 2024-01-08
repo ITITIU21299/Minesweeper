@@ -162,7 +162,7 @@ public class GameScreen extends JPanel {
                                 tile.flagged =true;
                                 flagPlaced();
                             } else if (tile.flagCheck){
-                                tile.setIcon(null);
+                                tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
                                 tile.flagCheck = false;
                                 tile.flagged = false;
                                 flagRemoved();
