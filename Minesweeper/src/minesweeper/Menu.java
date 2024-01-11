@@ -12,7 +12,11 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +41,7 @@ public class Menu extends javax.swing.JFrame {
     int diff = 4;
     int row;
     int col;
+    int music = 1;
     GameScreen gameScreen;
     String txtDiff;
     CardLayout cl;
@@ -51,7 +56,8 @@ public class Menu extends javax.swing.JFrame {
         } else {
             System.err.println("Resource not found: img/iconFrame.png");
            }
-
+        
+        setLocationRelativeTo(null);
         txtDiff = "Explain difficulty";
         java.awt.event.MouseEvent evt;
         
@@ -93,22 +99,19 @@ public class Menu extends javax.swing.JFrame {
         onBtnSettings = new javax.swing.JLabel();
         offBtnSettings = new javax.swing.JLabel();
         confirmBtnSettings = new javax.swing.JLabel();
-        backBtnSettings = new javax.swing.JLabel();
         bgSettings = new javax.swing.JLabel();
         pausePanel = new javax.swing.JPanel();
         titlePause = new javax.swing.JLabel();
         titlePause2 = new javax.swing.JLabel();
+        confirmBtnPause = new javax.swing.JLabel();
         onBtnPause = new javax.swing.JLabel();
         offBtnPause = new javax.swing.JLabel();
-        confirmBtnPause = new javax.swing.JLabel();
-        backBtnPause = new javax.swing.JLabel();
         bgPause = new javax.swing.JLabel();
         menuPanel = new javax.swing.JPanel();
         startBtn = new javax.swing.JLabel();
         settingsBtn = new javax.swing.JLabel();
         exitBtn = new javax.swing.JLabel();
         bgMenu = new javax.swing.JLabel();
-        saveBtn = new javax.swing.JLabel();
         pauseBtn = new javax.swing.JLabel();
         menuBtn = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -322,7 +325,7 @@ public class Menu extends javax.swing.JFrame {
         onBtnSettings.setBounds(230, 10, 80, 70);
 
         offBtnSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png"))); // NOI18N
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBnt-Off-Idle.png"))); // NOI18N
         offBtnSettings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 offBtnSettingsMouseClicked(evt);
@@ -363,29 +366,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         settingsPanel.add(confirmBtnSettings);
-        confirmBtnSettings.setBounds(267, 295, 133, 46);
-
-        backBtnSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png"))); // NOI18N
-        backBtnSettings.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backBtnSettingsMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backBtnSettingsMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                backBtnSettingsMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                backBtnSettingsMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                backBtnSettingsMouseReleased(evt);
-            }
-        });
-        settingsPanel.add(backBtnSettings);
-        backBtnSettings.setBounds(67, 295, 133, 46);
+        confirmBtnSettings.setBounds(160, 300, 133, 46);
 
         bgSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         bgSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
@@ -415,6 +396,28 @@ public class Menu extends javax.swing.JFrame {
         pausePanel.add(titlePause2);
         titlePause2.setBounds(0, 0, 240, 80);
 
+        confirmBtnPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        confirmBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png"))); // NOI18N
+        confirmBtnPause.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmBtnPauseMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmBtnPauseMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmBtnPauseMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                confirmBtnPauseMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                confirmBtnPauseMouseReleased(evt);
+            }
+        });
+        pausePanel.add(confirmBtnPause);
+        confirmBtnPause.setBounds(160, 300, 133, 46);
+
         onBtnPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png"))); // NOI18N
         onBtnPause.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -438,7 +441,7 @@ public class Menu extends javax.swing.JFrame {
         onBtnPause.setBounds(230, 10, 80, 70);
 
         offBtnPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png"))); // NOI18N
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBnt-Off-Idle.png"))); // NOI18N
         offBtnPause.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 offBtnPauseMouseClicked(evt);
@@ -458,50 +461,6 @@ public class Menu extends javax.swing.JFrame {
         });
         pausePanel.add(offBtnPause);
         offBtnPause.setBounds(340, 10, 80, 70);
-
-        confirmBtnPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        confirmBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png"))); // NOI18N
-        confirmBtnPause.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                confirmBtnPauseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                confirmBtnPauseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                confirmBtnPauseMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                confirmBtnPauseMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                confirmBtnPauseMouseReleased(evt);
-            }
-        });
-        pausePanel.add(confirmBtnPause);
-        confirmBtnPause.setBounds(267, 295, 133, 46);
-
-        backBtnPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png"))); // NOI18N
-        backBtnPause.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backBtnPauseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backBtnPauseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                backBtnPauseMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                backBtnPauseMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                backBtnPauseMouseReleased(evt);
-            }
-        });
-        pausePanel.add(backBtnPause);
-        backBtnPause.setBounds(67, 295, 133, 46);
 
         bgPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         bgPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/background.png"))); // NOI18N
@@ -593,29 +552,6 @@ public class Menu extends javax.swing.JFrame {
 
         getContentPane().add(parent);
         parent.setBounds(375, 240, 466, 366);
-
-        saveBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Idle-new.png"))); // NOI18N
-        pauseBtn.setVisible(false);
-        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveBtnMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                saveBtnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                saveBtnMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                saveBtnMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                saveBtnMouseReleased(evt);
-            }
-        });
-        getContentPane().add(saveBtn);
-        saveBtn.setBounds(70, 380, 133, 60);
 
         pauseBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pauseBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pauseBtn-Idle-new.png"))); // NOI18N
@@ -914,11 +850,22 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmBtnDiffMouseReleased
 
     private void confirmBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMouseClicked
-        startBtn.setVisible(true);
+        /* startBtn.setVisible(true);
         settingsBtn.setVisible(true);
         exitBtn.setVisible(true);      
         
         settingsPanel.setVisible(false);
+        */ 
+        parent.setLocation(375, 240);
+        parent.setSize(466, 366);
+        parent.removeAll();
+        parent.add(menuPanel);
+        parent.repaint();
+        parent.revalidate();
+        cl.show(parent, "menuPanel");      
+        
+        // menuBtn.setVisible(false);
+        // pauseBtn.setVisible(false);            
     }//GEN-LAST:event_confirmBtnSettingsMouseClicked
 
     private void confirmBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnSettingsMouseEntered
@@ -937,73 +884,68 @@ public class Menu extends javax.swing.JFrame {
         confirmBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Hover-new.png")));         
     }//GEN-LAST:event_confirmBtnSettingsMouseReleased
 
-    private void backBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseClicked
-        parent.removeAll();
-        parent.add(menuPanel);
-        parent.repaint();
-        parent.revalidate();
-        cl.show(parent, "menuPanel"); 
-    }//GEN-LAST:event_backBtnSettingsMouseClicked
-
-    private void backBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseEntered
-        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
-    }//GEN-LAST:event_backBtnSettingsMouseEntered
-
-    private void backBtnSettingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseExited
-        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png")));         
-    }//GEN-LAST:event_backBtnSettingsMouseExited
-
-    private void backBtnSettingsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMousePressed
-        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Press-new.png")));         
-    }//GEN-LAST:event_backBtnSettingsMousePressed
-
-    private void backBtnSettingsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnSettingsMouseReleased
-        backBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
-    }//GEN-LAST:event_backBtnSettingsMouseReleased
-
     private void onBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMouseClicked
-         Minesweeper.PlayMusic();
+        if (music == 1) return;
+        music = 1; 
+        Minesweeper.PlayMusic();
+        onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));   
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png")));   
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));     
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png")));             
     }//GEN-LAST:event_onBtnSettingsMouseClicked
 
     private void onBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMouseEntered
+        if (music == 1) return;
         onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Hover.png")));         
     }//GEN-LAST:event_onBtnSettingsMouseEntered
 
     private void onBtnSettingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMouseExited
+        if (music == 1) return;
         onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));         
     }//GEN-LAST:event_onBtnSettingsMouseExited
 
     private void onBtnSettingsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMousePressed
+        if (music == 1) return;
         onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));         
     }//GEN-LAST:event_onBtnSettingsMousePressed
 
     private void onBtnSettingsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnSettingsMouseReleased
-        onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Hover.png")));         
+        onBtnSettingsMouseClicked(evt);         
     }//GEN-LAST:event_onBtnSettingsMouseReleased
 
     private void offBtnSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMouseClicked
-       Minesweeper.StopMusic();
+        if (music == 0) return;
+        music = 0;
+        Minesweeper.StopMusic();
+        onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));        
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Press.png")));
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Press.png")));        
     }//GEN-LAST:event_offBtnSettingsMouseClicked
 
     private void offBtnSettingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMouseEntered
-        // TODO add your handling code here:
+        if (music == 0) return;
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Hover.png")));         
     }//GEN-LAST:event_offBtnSettingsMouseEntered
 
     private void offBtnSettingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMouseExited
-        // TODO add your handling code here:
+        if (music == 0) return;
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png")));      
     }//GEN-LAST:event_offBtnSettingsMouseExited
 
     private void offBtnSettingsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMousePressed
-        // TODO add your handling code here:
+        if (music == 0) return;
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Press.png")));      
     }//GEN-LAST:event_offBtnSettingsMousePressed
 
     private void offBtnSettingsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnSettingsMouseReleased
-        // TODO add your handling code here:
+        offBtnSettingsMouseClicked(evt);
     }//GEN-LAST:event_offBtnSettingsMouseReleased
 
     private void menuBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBtnMouseClicked
-        gameScreen.stopTimer();
-
+        gameScreen.gameOver = true;
+        // gameScreen.stopTimer();
+        
         parent.setLocation(375, 240);
         parent.setSize(466, 366);
         parent.removeAll();
@@ -1012,6 +954,8 @@ public class Menu extends javax.swing.JFrame {
         parent.revalidate();
         cl.show(parent, "menuPanel");      
         
+        menuBtn.setVisible(false);
+        pauseBtn.setVisible(false);       
         
     }//GEN-LAST:event_menuBtnMouseClicked
 
@@ -1034,7 +978,6 @@ public class Menu extends javax.swing.JFrame {
 
     private void pauseBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBtnMouseClicked
 //        if(GameScreen.NummPause>0){
-        gameScreen.stopTimer();
         parent.setLocation(375, 240);
         parent.setSize(466, 366);
         parent.removeAll();
@@ -1042,6 +985,8 @@ public class Menu extends javax.swing.JFrame {
         parent.repaint();
         parent.revalidate();
         cl.show(parent, "pausePanel");
+        
+        pauseBtn.setVisible(false);
 //        GameScreen.NummPause--;
         GameScreen.gamePaused = true;
 //        }
@@ -1067,58 +1012,19 @@ public class Menu extends javax.swing.JFrame {
         pauseBtnMouseClicked(evt);
     }//GEN-LAST:event_pauseBtnMouseReleased
 
-    private void onBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseClicked
-        Minesweeper.PlayMusic();
-    }//GEN-LAST:event_onBtnPauseMouseClicked
-
-    private void onBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_onBtnPauseMouseEntered
-
-    private void onBtnPauseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_onBtnPauseMouseExited
-
-    private void onBtnPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_onBtnPauseMousePressed
-
-    private void onBtnPauseMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_onBtnPauseMouseReleased
-
-    private void offBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseClicked
-        Minesweeper.StopMusic();
-    }//GEN-LAST:event_offBtnPauseMouseClicked
-
-    private void offBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_offBtnPauseMouseEntered
-
-    private void offBtnPauseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_offBtnPauseMouseExited
-
-    private void offBtnPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_offBtnPauseMousePressed
-
-    private void offBtnPauseMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_offBtnPauseMouseReleased
-
     private void confirmBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnPauseMouseClicked
         // Save settings
-        gameScreen.startTimer();        
         
-        parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
-        parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);
+        parent.setLocation((int)(1217 - 40 * row) /2 , 2);
+        parent.setSize(40*col, 40*row + 40);
         parent.removeAll();
         parent.add(gameScreen);
         parent.repaint();
         parent.revalidate();
         cl.show(parent, "gameScreen");
         GameScreen.gamePaused=false;
+        
+        pauseBtn.setVisible(true);
     }//GEN-LAST:event_confirmBtnPauseMouseClicked
 
     private void confirmBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmBtnPauseMouseEntered
@@ -1137,57 +1043,65 @@ public class Menu extends javax.swing.JFrame {
         confirmBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Hover-new.png")));         
     }//GEN-LAST:event_confirmBtnPauseMouseReleased
 
-    private void backBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnPauseMouseClicked
-        // Discard settings        
-        gameScreen.startTimer();        
-        
-        parent.setLocation((int)(1217 - 40 * row) /2 , (int) (646 - 40 * (col + 1)) );
-        parent.setSize(gameScreen.boardWidth, gameScreen.boardHeight);
-        parent.removeAll();
-        parent.add(gameScreen);
-        parent.repaint();
-        parent.revalidate();
-        cl.show(parent, "gameScreen");
-    }//GEN-LAST:event_backBtnPauseMouseClicked
+    private void onBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseClicked
+        if (music == 1) return;
+        music = 1; 
+        Minesweeper.PlayMusic();
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));   
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png")));
+        onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png")));        
+    }//GEN-LAST:event_onBtnPauseMouseClicked
 
-    private void backBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnPauseMouseEntered
-        backBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
-    }//GEN-LAST:event_backBtnPauseMouseEntered
+    private void onBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseEntered
+        if (music == 1) return;
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Hover.png")));   
+    }//GEN-LAST:event_onBtnPauseMouseEntered
 
-    private void backBtnPauseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnPauseMouseExited
-        backBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Idle-new.png")));         
-    }//GEN-LAST:event_backBtnPauseMouseExited
+    private void onBtnPauseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseExited
+        if (music == 1) return;
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));
+    }//GEN-LAST:event_onBtnPauseMouseExited
 
-    private void backBtnPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnPauseMousePressed
-        backBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Press-new.png")));         
-    }//GEN-LAST:event_backBtnPauseMousePressed
+    private void onBtnPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMousePressed
+        if (music == 1) return;
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Press.png")));
+    }//GEN-LAST:event_onBtnPauseMousePressed
 
-    private void backBtnPauseMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnPauseMouseReleased
-        backBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backBtn-Hover-new.png")));         
-    }//GEN-LAST:event_backBtnPauseMouseReleased
+    private void onBtnPauseMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBtnPauseMouseReleased
+        onBtnPauseMouseClicked(evt);
+    }//GEN-LAST:event_onBtnPauseMouseReleased
 
-    private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
-        JOptionPane.showMessageDialog(null, "Saved", "Notification",JOptionPane.INFORMATION_MESSAGE);
-        //GameScreen.saveGame();
-    }//GEN-LAST:event_saveBtnMouseClicked
+    private void offBtnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseClicked
+        if (music == 0) return;
+        music = 0; 
+        Minesweeper.StopMusic();
+        onBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));   
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Press.png"))); 
+        onBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-On-Idle.png")));
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Press.png")));        
+    }//GEN-LAST:event_offBtnPauseMouseClicked
 
-    private void saveBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseEntered
-        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Hover-new.png")));                 
-    }//GEN-LAST:event_saveBtnMouseEntered
+    private void offBtnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseEntered
+        if (music == 0) return;
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Hover.png"))); 
+    }//GEN-LAST:event_offBtnPauseMouseEntered
 
-    private void saveBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseExited
-        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Idle-new.png")));                 
-    }//GEN-LAST:event_saveBtnMouseExited
+    private void offBtnPauseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseExited
+        if (music == 0) return;        
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png"))); 
+    }//GEN-LAST:event_offBtnPauseMouseExited
 
-    private void saveBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMousePressed
-        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Press-new.png")));                 
-    }//GEN-LAST:event_saveBtnMousePressed
+    private void offBtnPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMousePressed
+        if (music == 0) return;        
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Press.png"))); 
+    }//GEN-LAST:event_offBtnPauseMousePressed
 
-    private void saveBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseReleased
-        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/saveBtn-Hover-new.png")));                 
-    }//GEN-LAST:event_saveBtnMouseReleased
+    private void offBtnPauseMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_offBtnPauseMouseReleased
+        offBtnPauseMouseClicked(evt);
+    }//GEN-LAST:event_offBtnPauseMouseReleased
 
-
+   
     /**
      * @param args the command line arguments
      */
@@ -1222,11 +1136,11 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backBtnDiff;
-    private javax.swing.JLabel backBtnPause;
-    private javax.swing.JLabel backBtnSettings;
     private javax.swing.JLabel bgDiff;
     private javax.swing.JLabel bgMenu;
     private javax.swing.JLabel bgPause;
@@ -1253,7 +1167,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel pausePanel;
     private javax.swing.JLabel rowLabel;
     private javax.swing.JLabel rowLabel2;
-    private javax.swing.JLabel saveBtn;
     private javax.swing.JLabel settingsBtn;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel startBtn;
