@@ -2,17 +2,12 @@ package minesweeper;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 import javax.swing.*;
-import java.text.SimpleDateFormat;
 import java.util.Stack;
 
 public class GameScreen extends JPanel {
-    private int initialLives;
     int undoTimes;
     private Stack<Action> actionStack = new Stack<>();
     int stackIndex = 0;
@@ -70,19 +65,14 @@ public class GameScreen extends JPanel {
     Random random = new Random();
     int numberOfFlags = 0;
     JLabel mineLabel = new JLabel();
-    private   int interval=0;
     int tilesClicked = 0;
     boolean gameOver = false;
     boolean gameNotBegin = true;
-
     private int difficulty;
     private Timer timer;
     private static int secondsPassed;
     private int timeLimit;
-    private JButton pauseResumeButton;
     public static boolean gamePaused = false;
-    private int elapsedTimeSeconds;
-    private boolean isGameTour;
 
     private JButton saveButton;
     public GameScreen(int diff, int row, int col) {
@@ -125,10 +115,8 @@ public class GameScreen extends JPanel {
             for (int cols = 0; cols < numCols; cols++) {
                 MineTile tile = new MineTile(rows, cols);
                 board[rows][cols] = tile;
-
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0, 0, 0, 0));
-//                tile.setFont(new Font("Arial Unicode MS", Font.PLAIN, 45));
                 tile.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
@@ -142,13 +130,11 @@ public class GameScreen extends JPanel {
                             return;
                         }
                         MineTile tile = (MineTile) e.getSource();
-                        //System.out.println(tile.getIcon().toString().contains("/img/0.png"));
                         if (e.getButton() == MouseEvent.BUTTON1) {
                             if(tile.flagCheck){
                                 return;
                             }
                             if (tile.getIcon().toString().contains("/img/0.png")) {
-                                System.out.println(".mousePressed()");
                                 if (mineList.contains(tile)) {
                                     revealMine();
                                 } else {
@@ -222,30 +208,22 @@ public class GameScreen extends JPanel {
         return  timeLimit;
     }
     
-    private int Initial_Pause;
-    
     private void setDifficulty(){
         switch (difficulty){
             case 0:
                 numberOfMines = Math.round((10 * numRows * numCols) / 100.0f);
-                initialLives = 3;
                 timeLimit=500;
                 undoTimes=1;
-                Initial_Pause=3;
                 break;
             case 1:
                 numberOfMines = Math.round((15 * numRows * numCols) / 100.0f);
-                initialLives = 2;
                 timeLimit=400;
                 undoTimes=2;
-                Initial_Pause=2;
                 break;
             case 2:
                 numberOfMines = Math.round((25 * numRows * numCols) / 100.0f);
-                initialLives = 1;
                 timeLimit=300;
                 undoTimes=3;
-                Initial_Pause=1;
                 break;
         }
     }
