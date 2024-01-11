@@ -325,7 +325,7 @@ public class Menu extends javax.swing.JFrame {
         onBtnSettings.setBounds(230, 10, 80, 70);
 
         offBtnSettings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBnt-Off-Idle.png"))); // NOI18N
+        offBtnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png"))); // NOI18N
         offBtnSettings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 offBtnSettingsMouseClicked(evt);
@@ -441,7 +441,7 @@ public class Menu extends javax.swing.JFrame {
         onBtnPause.setBounds(230, 10, 80, 70);
 
         offBtnPause.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBnt-Off-Idle.png"))); // NOI18N
+        offBtnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/soundBtn-Off-Idle.png"))); // NOI18N
         offBtnPause.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 offBtnPauseMouseClicked(evt);
