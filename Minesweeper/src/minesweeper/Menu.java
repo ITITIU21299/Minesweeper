@@ -129,13 +129,13 @@ public class Menu extends javax.swing.JFrame {
 
         txtRow.setFont(new Font("Open Sans", Font.BOLD, 22));
         diffPanel.add(txtRow);
-        txtRow.setBounds(183, 80, 100, 40);
+        txtRow.setBounds(183, 70, 100, 40);
 
         txtColumn.setFont(new Font("Open Sans", Font.BOLD, 22));
         diffPanel.add(txtColumn);
-        txtColumn.setBounds(183, 130, 100, 40);
+        txtColumn.setBounds(183, 120, 100, 40);
 
-        txtDiffExplain.setFont(new Font("Open Sans", Font.BOLD, 19));
+        txtDiffExplain.setFont(new Font("Open Sans", Font.BOLD, 20));
         txtDiffExplain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtDiffExplain.setLabelFor(diffPanel);
         txtDiffExplain.setText("Explain difficulty");
@@ -144,34 +144,34 @@ public class Menu extends javax.swing.JFrame {
         diffPanel.add(txtDiffExplain);
         txtDiffExplain.setBounds(0, 240, 466, 40);
 
-        rowLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        rowLabel2.setText("7 < rows < 16");
+        rowLabel2.setFont(new Font("Open Sans", Font.BOLD, 20));
+        rowLabel2.setText("( 8 - 15 )");
         diffPanel.add(rowLabel2);
-        rowLabel2.setBounds(290, 80, 160, 40);
+        rowLabel2.setBounds(290, 70, 160, 40);
 
-        columnLabel2.setFont(new Font("Open Sans", Font.BOLD, 18));
-        columnLabel2.setText("7 < columns < 16");
+        columnLabel2.setFont(new Font("Open Sans", Font.BOLD, 20));
+        columnLabel2.setText("( 8 - 15 )");
         diffPanel.add(columnLabel2);
-        columnLabel2.setBounds(290, 130, 160, 40);
+        columnLabel2.setBounds(290, 120, 160, 40);
 
-        rowLabel.setFont(new Font("Open Sans", Font.BOLD, 18));
+        rowLabel.setFont(new Font("Open Sans", Font.BOLD, 20));
         rowLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         rowLabel.setLabelFor(diffPanel);
         rowLabel.setText("Rows :");
         rowLabel.setAlignmentY(0.0F);
         diffPanel.add(rowLabel);
-        rowLabel.setBounds(46, 80, 120, 40);
+        rowLabel.setBounds(46, 70, 120, 40);
 
-        columnLabel.setFont(new Font("Open Sans", Font.BOLD, 18));
+        columnLabel.setFont(new Font("Open Sans", Font.BOLD, 20));
         columnLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         columnLabel.setLabelFor(diffPanel);
         columnLabel.setText("Columns :");
         columnLabel.setToolTipText("");
         columnLabel.setAlignmentY(0.0F);
         diffPanel.add(columnLabel);
-        columnLabel.setBounds(46, 130, 120, 40);
+        columnLabel.setBounds(46, 120, 120, 40);
 
-        titleDiff.setFont(new Font("Open Sans", Font.BOLD, 28));
+        titleDiff.setFont(new Font("Open Sans", Font.BOLD, 20));
         titleDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleDiff.setLabelFor(diffPanel);
         titleDiff.setText("Set rows and columns");
@@ -196,7 +196,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         diffPanel.add(easyBtn);
-        easyBtn.setBounds(17, 190, 133, 46);
+        easyBtn.setBounds(17, 185, 133, 46);
 
         mediumBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mediumBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mediumBtn-Idle-new.png"))); // NOI18N
@@ -215,7 +215,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         diffPanel.add(mediumBtn);
-        mediumBtn.setBounds(167, 190, 133, 46);
+        mediumBtn.setBounds(167, 185, 133, 46);
 
         hardBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         hardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hardBtn-Idle-new.png"))); // NOI18N
@@ -234,7 +234,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         diffPanel.add(hardBtn);
-        hardBtn.setBounds(317, 190, 133, 46);
+        hardBtn.setBounds(317, 185, 133, 46);
 
         confirmBtnDiff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         confirmBtnDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmBtn-Idle-new.png"))); // NOI18N
@@ -386,7 +386,7 @@ public class Menu extends javax.swing.JFrame {
         titlePause.setText("PAUSE");
         titlePause.setAlignmentY(0.0F);
         pausePanel.add(titlePause);
-        titlePause.setBounds(100, 130, 240, 80);
+        titlePause.setBounds(110, 130, 240, 80);
 
         titlePause2.setFont(new Font("Open Sans", Font.BOLD, 28));
         titlePause2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
