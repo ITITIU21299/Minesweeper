@@ -7,7 +7,7 @@ import javax.sound.sampled.Clip;
 
 public class Minesweeper {
     
-    private static Clip clip;
+
     
     public static void main(String[] args) {
         Menu menu = new Menu();
@@ -15,6 +15,7 @@ public class Minesweeper {
         PlayMusic();
     }
     
+    private static Clip clip;
     public static void PlayMusic(){
         try {
             String filepath = "src\\sound\\Schubert - Serenade.wav";
@@ -32,7 +33,6 @@ public class Minesweeper {
             System.out.println(e);
         }
     }
-    
     public static void StopMusic(){
          if (clip != null && clip.isRunning()) {
             clip.stop();
