@@ -177,11 +177,6 @@ public class GameScreen extends JPanel {
                 tilesClicked--;
             }
             else{
-                for (MineTile mineTile : mineList){
-                    if (!mineTile.isFlagged()){
-                        mineTile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
-                    }
-                }
                 gameOver = false;
                 startTimer();
             }
