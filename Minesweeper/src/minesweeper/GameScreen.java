@@ -39,15 +39,7 @@ public class GameScreen extends JPanel {
         public boolean isFlagged() {
             return flagged;
         }
-        private boolean cleared = false;
 
-        public boolean isCleared() {
-            return cleared;
-        }
-
-        public void setCleared(boolean cleared) {
-            this.cleared = cleared;
-        }
     }
 
     int tileSize = 40;
