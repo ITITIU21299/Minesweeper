@@ -70,8 +70,6 @@ public class GameScreen extends JPanel {
     private JButton saveButton;
 
     public GameScreen(int diff, int row, int col) {
-
-        win = false;
         numRows = row;
         numCols = col;
         difficulty = diff;
@@ -165,7 +163,7 @@ public class GameScreen extends JPanel {
 
     private void undo() {
         if (undoTimes > 0) {
-            if (!actionStack.isEmpty()) {
+            if (!actionStack.isEmpty() && !textLabel.getText().contains("Win")) {
                 Action lastAction = actionStack.pop();
                 undoTimes--;
                 updateLabel();
@@ -184,11 +182,15 @@ public class GameScreen extends JPanel {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No more undos!");
+            if (!textLabel.getText().contains("Win")){
+                JOptionPane.showMessageDialog(this, "No more undos!");
+            } else{
+                if (textLabel.getText().contains("Win")) {
+                    JOptionPane.showMessageDialog(this, "You won! No need to undo");
+                }
+            }
         }
     }
-
-    private boolean win = true;
 
     private void setDifficulty() {
         switch (difficulty) {
@@ -270,7 +272,6 @@ public class GameScreen extends JPanel {
         gameOver = true;
         stopTimer();
         textLabel.setText("Game Over!");
-        win = false;
         actionStack.push(new Action(null, false, -1));
     }
 
@@ -406,8 +407,6 @@ public class GameScreen extends JPanel {
             gameOver = true;
             stopTimer();
             textLabel.setText("Mines Cleared, You Win!");
-            win = true;
-
         }
     }
 
@@ -429,9 +428,5 @@ public class GameScreen extends JPanel {
     public void flagRemoved() {
         numberOfFlags--;
         mineLabel.setText("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
-    }
-
-    public boolean isWin() {
-        return win;
     }
 }
