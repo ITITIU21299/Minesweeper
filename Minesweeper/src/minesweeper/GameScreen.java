@@ -28,7 +28,6 @@ public class GameScreen extends JPanel {
 
         int rows;
         int cols;
-        boolean flagCheck = false;
         boolean flagged = false;
 
 
@@ -131,7 +130,7 @@ public class GameScreen extends JPanel {
                         }
                         MineTile tile = (MineTile) e.getSource();
                         if (e.getButton() == MouseEvent.BUTTON1) {
-                            if(tile.flagCheck){
+                            if(tile.isFlagged()){
                                 return;
                             }
                             if (tile.getIcon().toString().contains("/img/0.png")) {
@@ -144,12 +143,10 @@ public class GameScreen extends JPanel {
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
                             if (tile.getIcon().toString().contains("/img/0.png") && tile.isEnabled()) {
                                 tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/11.png")));
-                                tile.flagCheck = true;
                                 tile.flagged =true;
                                 flagPlaced();
-                            } else if (tile.flagCheck){
+                            } else if (tile.isFlagged()){
                                 tile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/0.png")));
-                                tile.flagCheck = false;
                                 tile.flagged = false;
                                 flagRemoved();
                             }
