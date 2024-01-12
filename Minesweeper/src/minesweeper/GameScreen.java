@@ -95,7 +95,7 @@ public class GameScreen extends JPanel {
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel, BorderLayout.WEST);
         this.add(textPanel, BorderLayout.NORTH);
-        mineLabel = new JLabel("Reamining mines: " + Integer.toString(numberOfMines - numberOfFlags));
+        mineLabel = new JLabel("Remaining mines: " + Integer.toString(numberOfMines - numberOfFlags));
         mineLabel.setFont(new Font("Arial", Font.BOLD, 18));
         mineLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(mineLabel, BorderLayout.SOUTH);
