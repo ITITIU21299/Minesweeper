@@ -187,10 +187,6 @@ public class GameScreen extends JPanel {
     }
     
     private boolean win=true;
-
-    public int getTimeLimit(){
-        return  timeLimit;
-    }
     
     private void setDifficulty(){
         switch (difficulty){
