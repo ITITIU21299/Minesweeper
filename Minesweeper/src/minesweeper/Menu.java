@@ -80,7 +80,7 @@ public class Menu extends javax.swing.JFrame {
         bgMenu = new javax.swing.JLabel();
         pauseBtn = new javax.swing.JLabel();
         menuBtn = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        backGround = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Minesweeper");
@@ -565,9 +565,9 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(menuBtn);
         menuBtn.setBounds(60, 550, 133, 46);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.jpg"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1217, 646);
+        backGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.jpg"))); // NOI18N
+        getContentPane().add(backGround);
+        backGround.setBounds(0, 0, 1217, 646);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1052,6 +1052,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backBtnDiff;
+    private javax.swing.JLabel backGround;
     private javax.swing.JLabel bgDiff;
     private javax.swing.JLabel bgMenu;
     private javax.swing.JLabel bgPause;
@@ -1065,7 +1066,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel easyBtn;
     private javax.swing.JLabel exitBtn;
     private javax.swing.JLabel hardBtn;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel mediumBtn;
     private javax.swing.JLabel menuBtn;
     private javax.swing.JPanel menuPanel;
